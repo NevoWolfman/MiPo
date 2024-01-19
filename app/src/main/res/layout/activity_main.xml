@@ -26,6 +26,7 @@
         android:hint="E-mail"
         android:textSize="30sp"
         android:gravity="center"
+        android:inputType="textEmailAddress"
         />
 
     <EditText
@@ -38,6 +39,18 @@
         android:hint="Password"
         android:textSize="30sp"
         android:gravity="center"
+        android:inputType="textPassword"
+        />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/etPassword"
+        android:layout_marginTop="25dp"
+        android:text="Login"
+        android:textSize="25sp"
         />
 
     <TextView
@@ -45,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/etPassword"
+        android:layout_below="@id/btnLogin"
         android:layout_marginTop="25dp"
         android:text="Don't have an account?"
         android:textSize="25sp"
@@ -54,7 +67,7 @@
         />
 
     <TextView
-        android:id="@+id/tvForgotPassword"
+        android:id="@+id/tvForgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
