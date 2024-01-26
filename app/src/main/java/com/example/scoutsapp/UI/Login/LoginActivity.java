@@ -1,4 +1,4 @@
-package com.example.scoutsapp;
+package com.example.scoutsapp.UI.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import com.example.scoutsapp.R;
+
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText etEmail, etPassword;
     private Button btnLogin;
@@ -17,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         if(view == btnLogin)
         {
-
+            ModuleLogin.userLogin(etEmail.getText().toString(), etPassword.getText().toString());
         }
         else if(view == tvSignUp)
         {
