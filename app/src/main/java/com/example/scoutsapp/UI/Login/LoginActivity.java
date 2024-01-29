@@ -47,13 +47,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         if(view == btnLogin)
         {
-            if (moduleLogin.userLogin(etEmail.getText().toString(), etPassword.getText().toString()) == -1)
+            long id = moduleLogin.userLogin(etEmail.getText().toString(), etPassword.getText().toString());
+            if (id == -1)
             {
                 Toast.makeText(this, "Email or Password are incorrect", Toast.LENGTH_SHORT).show();
             }
             else
             {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.putExtra("email", etEmail.getText().toString());
                 startActivity(intent);
             }
         }
