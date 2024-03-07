@@ -50,6 +50,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 Toast.makeText(this, "Email already exists", Toast.LENGTH_SHORT).show();
             }
             else {
+                //TODO: make actual worthwhile error messages
                 Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
             }
         }

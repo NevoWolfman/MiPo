@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toNewOrg.setOnClickListener(this);
 
         Repository repository = new Repository(this);
+        //TODO: make this not reliant on intent's extras and instead use the DB or smth
         String email = getIntent().getStringExtra("email");
         if(email != null)
         {
