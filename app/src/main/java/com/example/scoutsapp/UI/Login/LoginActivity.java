@@ -15,15 +15,14 @@ import com.example.scoutsapp.R;
 import com.example.scoutsapp.Repository.Repository;
 import com.example.scoutsapp.UI.Main.MainActivity;
 import com.example.scoutsapp.UI.SignUp.SignUpActivity;
-import com.example.scoutsapp.UI.Start.StartActivity;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ModuleLogin moduleLogin;
 
     private EditText etEmail, etPassword;
-    private Button btnLogin, toStart;
-    private TextView tvForgot;
+    private Button btnLogin;
+    private TextView tvSignUp, tvForgot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +35,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        toStart = findViewById(R.id.btnToStart);
+        tvSignUp = findViewById(R.id.tvSignUp);
         tvForgot = findViewById(R.id.tvForgot);
 
         btnLogin.setOnClickListener(this);
-        toStart.setOnClickListener(this);
+        tvSignUp.setOnClickListener(this);
         tvForgot.setOnClickListener(this);
     }
 
@@ -60,9 +59,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
             }
         }
-        else if(view == toStart)
+        else if(view == tvSignUp)
         {
-            Intent intent = new Intent(LoginActivity.this, StartActivity.class);
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         }
         else if(view == tvForgot)

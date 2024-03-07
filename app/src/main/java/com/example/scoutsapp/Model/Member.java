@@ -5,16 +5,13 @@ public class Member {
     String Name;
     int grade;
     String role;
-    String role_type;
 
-    public Member(int id, String name, int grade, String role, String role_type) {
+    public Member(int id, String name, int grade, String role) {
         this.id = id;
         Name = name;
         this.grade = grade;
         this.role = role;
-        this.role_type = role_type;
     }
-
 
     public int getId() {
         return id;
@@ -44,14 +41,9 @@ public class Member {
         return role;
     }
 
-    public String getRole_type() { return role_type; }
-
-    public void setRole_type(String role_type) { this.role_type = role_type; }
-
     public void setRole(String role) {
         this.role = role;
     }
-
 
     public boolean isThisRole(String role)
     {

@@ -13,7 +13,6 @@ import com.example.scoutsapp.R;
 import com.example.scoutsapp.Repository.Repository;
 import com.example.scoutsapp.Repository.UserModel;
 import com.example.scoutsapp.UI.Login.LoginActivity;
-import com.example.scoutsapp.UI.Start.StartActivity;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tvEmail, tvPassword;
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, StartActivity.class));
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
 
