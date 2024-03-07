@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         else if(view == tvForgot)
         {
-            //TODO
+            //TODO: add the password recovery thing
             Toast.makeText(this, "work in progress", Toast.LENGTH_SHORT).show();
         }
     }
