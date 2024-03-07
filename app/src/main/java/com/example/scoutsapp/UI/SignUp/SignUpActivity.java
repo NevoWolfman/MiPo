@@ -13,6 +13,7 @@ import com.example.scoutsapp.DB.SQLiteHelper;
 import com.example.scoutsapp.R;
 import com.example.scoutsapp.UI.Login.LoginActivity;
 import com.example.scoutsapp.UI.Login.ModuleLogin;
+import com.example.scoutsapp.UI.Start.StartActivity;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     private ModuleSignUp moduleSignUp;
@@ -55,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         }
         else if(view == btnBack)
         {
-            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+            Intent intent = new Intent(SignUpActivity.this, StartActivity.class);
             startActivity(intent);
         }
     }

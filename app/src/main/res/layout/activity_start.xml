@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.Start.StartActivity">
+
+    <TextView
+        android:id="@+id/tvStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MiPo"
+        android:textSize="50sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnToLogin"
+        android:layout_below="@id/tvStart"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:text="Login"
+        android:textSize="25sp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnToSignUp"
+        android:layout_below="@id/btnToLogin"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:text="Sign Up"
+        android:textSize="25sp"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnToNewOrg"
+        android:layout_below="@id/btnToSignUp"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:text="Create a New Organization"
+        android:textSize="20sp"
+        />
+
+</RelativeLayout>
