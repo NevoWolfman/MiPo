@@ -13,10 +13,11 @@ import com.example.scoutsapp.R;
 import com.example.scoutsapp.Repository.Repository;
 import com.example.scoutsapp.Repository.UserModel;
 import com.example.scoutsapp.UI.Login.LoginActivity;
+import com.example.scoutsapp.UI.NewOrg.NewOrgActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvEmail, tvPassword;
-    private Button btnSignOut;
+    private Button btnSignOut, toNewOrg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +26,10 @@ public class MainActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.tvEmail);
         tvPassword = findViewById(R.id.tvPassword);
         btnSignOut = findViewById(R.id.btnSignOut);
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            }
-        });
+        toNewOrg = findViewById(R.id.btnToNewOrg);
+
+        btnSignOut.setOnClickListener(this);
+        toNewOrg.setOnClickListener(this);
 
         Repository repository = new Repository(this);
         String email = getIntent().getStringExtra("email");
@@ -45,5 +44,17 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == btnSignOut)
+        {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        }
+        else if(view == toNewOrg)
+        {
+            startActivity(new Intent(MainActivity.this, NewOrgActivity.class));
+        }
     }
 }

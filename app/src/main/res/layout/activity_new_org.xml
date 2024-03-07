@@ -1,50 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.Main.MainActivity">
+    tools:context=".UI.NewOrg.NewOrgActivity">
 
-    <!-- TODO customize UI and stuff -->
     <TextView
-        android:id="@+id/tvEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/tvNewOrg"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="25dp"
+        android:text="Create Your Organization"
         android:textSize="30sp"
         />
 
-    <TextView
-        android:id="@+id/tvPassword"
-        android:layout_below="@+id/tvEmail"
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
+        android:id="@+id/etOrgName"
+        android:layout_below="@id/tvNewOrg"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:textSize="30sp"
+        android:hint="Name"
+        android:layout_marginTop="25dp"
+        android:textSize="20sp"
         />
 
     <Button
-        android:id="@+id/btnSignOut"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/btnNewOrg"
+        android:layout_below="@id/etOrgName"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/tvPassword"
-        android:layout_marginTop="50dp"
-        android:text="Sign Out"
+        android:layout_marginTop="25dp"
+        android:text="Create Organization"
         android:textSize="25sp"
         />
 
     <Button
-        android:id="@+id/btnToNewOrg"
+        android:id="@+id/btnBack1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/btnSignOut"
+        android:layout_below="@id/btnNewOrg"
         android:layout_marginTop="25dp"
-        android:text="Create new organization"
+        android:text="Go Back"
         android:textSize="25sp"
         />
 
