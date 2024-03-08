@@ -28,9 +28,6 @@ public class NewOrgActivity extends AppCompatActivity implements View.OnClickLis
 
         back.setOnClickListener(this);
         create.setOnClickListener(this);
-
-        //TODO: add testing for inputs
-        //TODO: do smth with the inputs
     }
 
     @Override
@@ -41,6 +38,9 @@ public class NewOrgActivity extends AppCompatActivity implements View.OnClickLis
         }
         else if(view == create)
         {
+            //TODO: add testing for inputs
+            //TODO: do smth with the inputs
+
             startActivity(new Intent(NewOrgActivity.this, OrgManagerActivity.class));
         }
     }

@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".UI.OrgManager.OrgManagerActivity">
 
-    <!--    TODO: make list of the current team    -->
-    <!--    TODO: make dialog for updating/deleting teams/members for long press in the list  -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,38 +17,24 @@
         android:layout_marginTop="25dp"
         />
 
-    <Button
-        android:layout_width="wrap_content"
+    <fragment
+        android:id="@+id/Org_Create_list"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnAddTeam"
         android:layout_below="@+id/tvOrgName"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/btnAddMember"
-        android:text="Add Team"
-        android:textSize="25sp"
-        android:layout_marginTop="25dp"
+        class="com.example.scoutsapp.UI.OrgManager.MemberFragment"
         />
 
-    <Button
-        android:layout_width="wrap_content"
+    <fragment
+        android:id="@+id/Org_Create_Buttons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btnAddMember"
-        android:layout_below="@+id/tvOrgName"
-        android:layout_alignParentRight="true"
-        android:text="Add Member"
-        android:textSize="25sp"
+        android:layout_alignParentBottom="true"
         android:layout_marginTop="25dp"
+        class="com.example.scoutsapp.UI.OrgManager.ButtonsFragment"
         />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnBack2"
-        android:layout_below="@+id/btnAddTeam"
-        android:layout_centerHorizontal="true"
-        android:text="Go Back"
-        android:textSize="25sp"
-        android:layout_marginTop="25dp"
-        />
+    <!--    TODO: make list of the current team    -->
+    <!--    TODO: make dialog for updating/deleting teams/members for long press in the list  -->
 
 </RelativeLayout>
