@@ -1,6 +1,5 @@
 package com.example.scoutsapp.UI.OrgManager;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -10,10 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.scoutsapp.Model.Member;
-import com.example.scoutsapp.databinding.FragmentItemBinding;
+import com.example.scoutsapp.R;
 
 import java.util.List;
-
 
 public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRecyclerViewAdapter.ViewHolder> {
 
@@ -28,7 +26,8 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return new ViewHolder(FragmentItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.fragment_item, parent, false));
 
     }
 
@@ -47,9 +46,10 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
         public final TextView name;
         public Member mItem;
 
-        public ViewHolder(FragmentItemBinding binding) {
-            super(binding.getRoot());
-            name = binding.MemberNameOrgList;
+        public ViewHolder(View view) {
+            super(view);
+            name = view.findViewById(R.id.MemberName_OrgList);
+            //TODO: make the clicks actually do smth and decide how to add members and teams
             name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

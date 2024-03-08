@@ -21,10 +21,10 @@ import java.util.LinkedList;
  */
 public class MemberFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
+    private OrgManagerActivity parent;
+    private RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -33,7 +33,6 @@ public class MemberFragment extends Fragment {
     public MemberFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static MemberFragment newInstance(int columnCount) {
         MemberFragment fragment = new MemberFragment();
@@ -50,6 +49,7 @@ public class MemberFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        parent = (OrgManagerActivity) requireActivity();
     }
 
     @Override
@@ -60,14 +60,19 @@ public class MemberFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyMemberRecyclerViewAdapter(requireContext(), new LinkedList<>()));
+            recyclerView.setAdapter(new MyMemberRecyclerViewAdapter(requireContext(), parent.getCurrent_team().getMembers()));
         }
         return view;
+    }
+
+    public void notifyItemInserted(int position)
+    {
+        recyclerView.getAdapter().notifyItemInserted(position);
     }
 }

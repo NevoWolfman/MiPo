@@ -1,5 +1,6 @@
 package com.example.scoutsapp.Model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Team {
@@ -12,6 +13,8 @@ public class Team {
     }
 
     public Team() {
+        this.name = "";
+        this.members = new LinkedList<>();
     }
 
     public String getName() {

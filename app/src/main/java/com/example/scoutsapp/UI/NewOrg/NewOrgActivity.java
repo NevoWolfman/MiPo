@@ -47,10 +47,13 @@ public class NewOrgActivity extends AppCompatActivity implements View.OnClickLis
             {
                 Toast.makeText(this, "Invalid Inputs", Toast.LENGTH_SHORT).show();
             }
-            Intent intent = new Intent(NewOrgActivity.this, OrgManagerActivity.class);
-            intent.putExtra("name", name);
-            intent.putExtra("password", password);
-            startActivity(intent);
+            else
+            {
+                Intent intent = new Intent(NewOrgActivity.this, OrgManagerActivity.class);
+                intent.putExtra("name", name);
+                intent.putExtra("password", password);
+                startActivity(intent);
+            }
         }
     }
 }

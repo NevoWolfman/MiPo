@@ -10,20 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.scoutsapp.Model.Member;
 import com.example.scoutsapp.R;
 import com.example.scoutsapp.UI.Main.MainActivity;
+import com.example.scoutsapp.UI.NewOrg.NewOrgActivity;
 
 public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
+    private OrgManagerActivity parent;
+    Button addTeam, addMember, back;
     public ButtonsFragment() {
         // Required empty public constructor
     }
-    Button addTeam, addMember, back;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_buttons, container, false);
+
+        parent = (OrgManagerActivity) requireActivity();
 
         addTeam = v.findViewById(R.id.btnAddTeam);
         addMember = v.findViewById(R.id.btnAddMember);
@@ -44,11 +50,12 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
         }
         else if(view == addMember)
         {
+            parent.addMember(new Member(123456789, "radin", 12, "lgbtqia+", "gay"));
 
         }
         else if(view == back)
         {
-            startActivity(new Intent(requireContext(), MainActivity.class));
+            startActivity(new Intent(requireContext(), NewOrgActivity.class));
         }
     }
 }
