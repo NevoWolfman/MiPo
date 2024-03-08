@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.scoutsapp.R;
 import com.example.scoutsapp.UI.Main.MainActivity;
@@ -38,10 +39,18 @@ public class NewOrgActivity extends AppCompatActivity implements View.OnClickLis
         }
         else if(view == create)
         {
-            //TODO: add testing for inputs
-            //TODO: do smth with the inputs
+            String name = orgName.getText().toString();
+            String password = orgPassword.getText().toString();
 
-            startActivity(new Intent(NewOrgActivity.this, OrgManagerActivity.class));
+            //TODO: make better checks and error messages
+            if(name.isEmpty() || password.isEmpty())
+            {
+                Toast.makeText(this, "Invalid Inputs", Toast.LENGTH_SHORT).show();
+            }
+            Intent intent = new Intent(NewOrgActivity.this, OrgManagerActivity.class);
+            intent.putExtra("name", name);
+            intent.putExtra("password", password);
+            startActivity(intent);
         }
     }
 }

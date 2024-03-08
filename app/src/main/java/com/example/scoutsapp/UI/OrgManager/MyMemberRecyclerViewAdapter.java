@@ -1,5 +1,6 @@
 package com.example.scoutsapp.UI.OrgManager;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -42,7 +43,7 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView name;
         public Member mItem;
 

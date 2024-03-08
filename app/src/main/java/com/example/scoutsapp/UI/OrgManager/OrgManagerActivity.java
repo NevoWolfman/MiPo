@@ -7,16 +7,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.scoutsapp.Model.Organization;
 import com.example.scoutsapp.R;
 import com.example.scoutsapp.UI.Main.MainActivity;
 
 public class OrgManagerActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private Organization org;
     Button addTeam, addMember, back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_org_manager);
+
+        org = new Organization(getIntent().getStringExtra("name"), getIntent().getStringExtra("password"));
+
         addTeam = findViewById(R.id.btnAddTeam);
         addMember = findViewById(R.id.btnAddMember);
         back = findViewById(R.id.btnBack2);

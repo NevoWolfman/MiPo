@@ -1,12 +1,23 @@
 package com.example.scoutsapp.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Organization {
     String Name;
-    MemberTree members;
+    String Password;
+    Team admins;
 
-    public Organization(String name, MemberTree members) {
+    public Organization(String name, String password, Team admins) {
         Name = name;
-        this.members = members;
+        Password = password;
+        this.admins = admins;
+    }
+
+    public Organization(String name, String password) {
+        Name = name;
+        Password = password;
+        this.admins = new Team();
     }
 
     public String getName() {
@@ -17,38 +28,19 @@ public class Organization {
         Name = name;
     }
 
-    public MemberTree getMembers() {
-        return members;
+    public String getPassword() {
+        return Password;
     }
 
-    public void setMembers(MemberTree members) {
-        this.members = members;
+    public void setPassword(String password) {
+        Password = password;
     }
 
-    class MemberTree{
-        Member[] members;
-        MemberTree[] next_levels;
+    public Team getAdmins() {
+        return admins;
+    }
 
-        public MemberTree(Member[] members, MemberTree[] next_levels) {
-            this.members = members;
-            this.next_levels = next_levels;
-        }
-        public MemberTree() {}
-
-        public Member[] getMembers() {
-            return members;
-        }
-
-        public void setMembers(Member[] members) {
-            this.members = members;
-        }
-
-        public MemberTree[] getNext_level() {
-            return next_levels;
-        }
-
-        public void setNext_level(MemberTree[] next_levels) {
-            this.next_levels = next_levels;
-        }
+    public void setAdmins(Team admins) {
+        this.admins = admins;
     }
 }

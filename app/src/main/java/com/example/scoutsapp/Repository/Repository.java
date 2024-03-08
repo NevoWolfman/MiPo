@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.scoutsapp.DB.SQLiteHelper;
+import com.example.scoutsapp.Model.Organization;
 
 public class Repository {
     private SQLiteHelper sqLiteHelper;
