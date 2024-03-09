@@ -5,31 +5,24 @@ import java.util.List;
 public class Member {
     int id;
     String Name;
-    int grade;
-    String role;
-    String role_type;
-
+    //the team the member is in
+    Team team;
     //the teams that the member is in charge of
     //can be null if he isn't in charge of any teams
-    List<Team> team;
+    List<Team> subordinates;
 
-    public Member(int id, String name, int grade, String role, String role_type) {
+    public Member(int id, String name, Team team) {
         this.id = id;
         Name = name;
-        this.grade = grade;
-        this.role = role;
-        this.role_type = role_type;
-    }
-
-    public Member(int id, String name, int grade, String role, String role_type, List<Team> team) {
-        this.id = id;
-        Name = name;
-        this.grade = grade;
-        this.role = role;
-        this.role_type = role_type;
         this.team = team;
     }
 
+    public Member(int id, String name, Team team, List<Team> subordinates) {
+        this.id = id;
+        Name = name;
+        this.team = team;
+        this.subordinates = subordinates;
+    }
 
     public int getId() {
         return id;
@@ -47,42 +40,19 @@ public class Member {
         Name = name;
     }
 
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public String getRole_type() { return role_type; }
-
-    public void setRole_type(String role_type) { this.role_type = role_type; }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-
-    public boolean isThisRole(String role)
-    {
-        return this.role.equals(role);
-    }
-
-    public boolean isThisID(int id)
-    {
-        return (this.id == id);
-    }
-
-    public List<Team> getTeam() {
+    public Team getTeam() {
         return team;
     }
 
-    public void setTeam(List<Team> team) {
+    public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public List<Team> getSubordinates() {
+        return subordinates;
+    }
+
+    public void setSubordinates(List<Team> subordinates) {
+        this.subordinates = subordinates;
     }
 }

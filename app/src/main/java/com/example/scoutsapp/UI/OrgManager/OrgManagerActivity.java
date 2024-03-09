@@ -46,9 +46,8 @@ public class OrgManagerActivity extends AppCompatActivity {
         this.current_team = current_team;
     }
 
-    public void addMember(Member member)
+    public void addMember()
     {
-        current_team.getMembers().add(member);
-        list.notifyItemInserted(current_team.getMembers().size()-1);
+
     }
 }

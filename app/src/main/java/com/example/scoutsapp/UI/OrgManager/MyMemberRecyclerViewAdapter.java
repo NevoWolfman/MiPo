@@ -68,7 +68,7 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
 
         @Override
         public String toString() {
-            return super.toString() + " '" + name.getText() + "'";
+            return super.toString() + " '"   + name.getText() + "'";
         }
     }
 }

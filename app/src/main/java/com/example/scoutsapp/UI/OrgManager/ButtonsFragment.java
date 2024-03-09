@@ -50,7 +50,8 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
         }
         else if(view == addMember)
         {
-            parent.addMember(new Member(123456789, "radin", 12, "lgbtqia+", "gay"));
+
+            parent.addMember();
 
         }
         else if(view == back)
