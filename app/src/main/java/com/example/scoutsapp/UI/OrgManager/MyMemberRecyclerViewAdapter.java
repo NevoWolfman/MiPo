@@ -35,6 +35,7 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.name.setText(holder.mItem.getName());
+        holder.id.setText(String.valueOf(holder.mItem.getId()));
     }
 
     @Override
@@ -43,12 +44,12 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView name;
+        public final TextView name, id;
         public Member mItem;
 
         public ViewHolder(View view) {
             super(view);
-            name = view.findViewById(R.id.MemberName_OrgList);
+            name = view.findViewById(R.id.MemberName);
             //TODO: make the clicks actually do smth and decide how to add members and teams
             name.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -64,11 +65,7 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
                     return true;
                 }
             });
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '"   + name.getText() + "'";
+            id = view.findViewById(R.id.MemberID);
         }
     }
 }

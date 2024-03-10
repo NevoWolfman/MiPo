@@ -2,16 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:orientation="horizontal">
 
+    <!-- TODO: add a checkbox for if the member has subordinates -->
+    <!-- TODO: CENTER THE DIV -->
+
     <TextView
-        android:id="@+id/MemberName_OrgList"
+        android:id="@+id/MemberID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Name_Sample"
+        android:text="@string/sample"
         android:textSize="25sp"
         android:clickable="true"
+        />
+
+    <TextView
+        android:id="@+id/MemberName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sample"
+        android:textSize="25sp"
+        android:clickable="true"
+        android:layout_marginLeft="20dp"
         />
 
 </LinearLayout>

@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Team {
-    String name;
-    List<Member> members;
+    private String name;
+    private List<Member> members;
 
     public Team(String name, List<Member> members) {
         this.name = name;
@@ -14,6 +14,11 @@ public class Team {
 
     public Team() {
         this.name = "";
+        this.members = new LinkedList<>();
+    }
+
+    public Team(String name) {
+        this.name = name;
         this.members = new LinkedList<>();
     }
 

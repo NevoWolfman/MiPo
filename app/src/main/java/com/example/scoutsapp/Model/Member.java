@@ -3,13 +3,13 @@ package com.example.scoutsapp.Model;
 import java.util.List;
 
 public class Member {
-    int id;
-    String Name;
+    private int id;
+    private String Name;
     //the team the member is in
-    Team team;
+    private Team team;
     //the teams that the member is in charge of
     //can be null if he isn't in charge of any teams
-    List<Team> subordinates;
+    private List<Team> subordinates; // goooooons maybe??????
 
     public Member(int id, String name, Team team) {
         this.id = id;
@@ -54,5 +54,12 @@ public class Member {
 
     public void setSubordinates(List<Team> subordinates) {
         this.subordinates = subordinates;
+    }
+
+    @Override
+    public String toString() {
+        return  "id=" + id +
+                ", Name='" + Name + '\'' +
+                ", team=" + team.getName();
     }
 }

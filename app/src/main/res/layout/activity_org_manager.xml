@@ -12,8 +12,19 @@
         android:id="@+id/tvOrgName"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="Org_Name"
+        android:text="@string/sample"
         android:textSize="40sp"
+        android:layout_marginTop="25dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTeamName"
+        android:layout_below="@id/tvOrgName"
+        android:layout_centerHorizontal="true"
+        android:text="@string/sample"
+        android:textSize="30sp"
         android:layout_marginTop="25dp"
         />
 
@@ -21,7 +32,9 @@
         android:id="@+id/Org_Create_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvOrgName"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tvTeamName"
+        android:layout_marginTop="20dp"
         android:layout_above="@+id/Org_Create_Buttons"
         class="com.example.scoutsapp.UI.OrgManager.MemberFragment"
         />
@@ -35,7 +48,6 @@
         class="com.example.scoutsapp.UI.OrgManager.ButtonsFragment"
         />
 
-    <!--    TODO: make list of the current team    -->
     <!--    TODO: make dialog for updating/deleting teams/members for long press in the list  -->
 
 </RelativeLayout>

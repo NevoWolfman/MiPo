@@ -71,7 +71,7 @@ public class MemberFragment extends Fragment {
         return view;
     }
 
-    public void notifyItemInserted(int position)
+    public void notifyMemberInserted(int position)
     {
         recyclerView.getAdapter().notifyItemInserted(position);
     }

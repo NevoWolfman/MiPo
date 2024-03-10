@@ -13,6 +13,7 @@ import com.example.scoutsapp.DB.SQLiteHelper;
 import com.example.scoutsapp.R;
 import com.example.scoutsapp.UI.Login.LoginActivity;
 import com.example.scoutsapp.UI.Login.ModuleLogin;
+import com.example.scoutsapp.UI.Main.MainActivity;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
     private ModuleSignUp moduleSignUp;
@@ -42,7 +43,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             if(error == ModuleSignUp.Error.SUCCESS)
             {
                 Toast.makeText(this, "User Created", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                intent.putExtra("email", etEmail.getText().toString());
                 startActivity(intent);
             }
             else if (error == ModuleSignUp.Error.EMAIL_ALREADY)

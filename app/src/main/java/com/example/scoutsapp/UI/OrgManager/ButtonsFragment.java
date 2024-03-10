@@ -51,7 +51,7 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
         else if(view == addMember)
         {
 
-            parent.addMember();
+            parent.showAddMemberDialog();
 
         }
         else if(view == back)

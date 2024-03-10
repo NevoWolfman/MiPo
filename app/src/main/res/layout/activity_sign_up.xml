@@ -42,6 +42,8 @@
         android:inputType="textPassword"
         />
 
+    <!--    TODO: add a 'confirm password' thingy-->
+
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="150dp"

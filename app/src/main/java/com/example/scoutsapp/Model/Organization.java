@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Organization {
-    String Name;
-    String Password;
-    Team admins;
+    private String Name;
+    private String Password;
+    private Team admins;
 
     public Organization(String name, String password, Team admins) {
         Name = name;
@@ -17,7 +17,7 @@ public class Organization {
     public Organization(String name, String password) {
         Name = name;
         Password = password;
-        this.admins = new Team();
+        this.admins = new Team("admins");
     }
 
     public String getName() {
