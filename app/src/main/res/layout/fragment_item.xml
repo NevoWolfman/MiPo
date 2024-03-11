@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:clickable="true">
 
     <!-- TODO: add a checkbox for if the member has subordinates -->
-    <!-- TODO: CENTER THE DIV -->
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cbHasTeam"
+        android:clickable="false"
+        />
 
     <TextView
-        android:id="@+id/MemberID"
+        android:id="@+id/MemberName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sample"
         android:textSize="25sp"
         android:clickable="true"
+        android:layout_marginLeft="20dp"
         />
 
     <TextView
-        android:id="@+id/MemberName"
+        android:id="@+id/MemberID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sample"

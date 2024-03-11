@@ -3,14 +3,19 @@ package com.example.scoutsapp.UI.OrgManager;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.example.scoutsapp.R;
 
@@ -25,6 +30,7 @@ public class MemberFragment extends Fragment {
     private int mColumnCount = 1;
     private OrgManagerActivity parent;
     private RecyclerView recyclerView;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -67,6 +73,7 @@ public class MemberFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             recyclerView.setAdapter(new MyMemberRecyclerViewAdapter(requireContext(), parent.getCurrent_team().getMembers()));
+            registerForContextMenu(recyclerView);
         }
         return view;
     }
@@ -74,5 +81,34 @@ public class MemberFragment extends Fragment {
     public void notifyMemberInserted(int position)
     {
         recyclerView.getAdapter().notifyItemInserted(position);
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        requireActivity().getMenuInflater().inflate(R.menu.member_edit, menu);
+    }
+
+    //TODO: make this work
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int id = item.getItemId();
+        if(id == R.id.editMember){
+            parent.showEditMemberDialog(parent.getCurrent_team().getMembers().get((int)info.id).getName());
+        }
+        else if (id == R.id.deleteMember) {
+
+        }
+        else if (id == R.id.addTeam) {
+
+        }
+        else if (id == R.id.deleteTeam) {
+
+        }
+        else {
+            return super.onContextItemSelected(item);
+        }
+        return true;
     }
 }

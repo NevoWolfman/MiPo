@@ -6,6 +6,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.scoutsapp.Model.Member;
@@ -25,17 +27,21 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View rootView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.fragment_item, parent, false);
 
-        return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false));
+        //TODO: open a menu to decide which of the teams of goons are going to be the current team, and then switch the list
+        //TODO: make this open a menu to delete this member or give it a team of goons
 
+        return new ViewHolder(rootView);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.name.setText(holder.mItem.getName());
-        holder.id.setText(String.valueOf(holder.mItem.getId()));
+        holder.member = mValues.get(position);
+        holder.name.setText(holder.member.getName());
+        holder.id.setText(String.valueOf(holder.member.getId()));
+        holder.cbHasGoons.setChecked(holder.member.hasGoons());
     }
 
     @Override
@@ -43,29 +49,16 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
         return mValues.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView name, id;
-        public Member mItem;
+        public final CheckBox cbHasGoons;
+        public Member member;
 
         public ViewHolder(View view) {
             super(view);
             name = view.findViewById(R.id.MemberName);
-            //TODO: make the clicks actually do smth and decide how to add members and teams
-            name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-            name.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-
-
-                    return true;
-                }
-            });
             id = view.findViewById(R.id.MemberID);
+            cbHasGoons = view.findViewById(R.id.cbHasTeam);
         }
     }
 }

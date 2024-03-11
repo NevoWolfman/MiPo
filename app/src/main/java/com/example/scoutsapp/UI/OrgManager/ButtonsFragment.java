@@ -18,7 +18,7 @@ import com.example.scoutsapp.UI.NewOrg.NewOrgActivity;
 public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
     private OrgManagerActivity parent;
-    Button addTeam, addMember, back;
+    Button addMember, back;
     public ButtonsFragment() {
         // Required empty public constructor
     }
@@ -31,11 +31,9 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
         parent = (OrgManagerActivity) requireActivity();
 
-        addTeam = v.findViewById(R.id.btnAddTeam);
         addMember = v.findViewById(R.id.btnAddMember);
         back = v.findViewById(R.id.btnBack2);
 
-        addTeam.setOnClickListener(this);
         addMember.setOnClickListener(this);
         back.setOnClickListener(this);
 
@@ -44,11 +42,7 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(view == addTeam)
-        {
-
-        }
-        else if(view == addMember)
+        if(view == addMember)
         {
 
             parent.showAddMemberDialog();

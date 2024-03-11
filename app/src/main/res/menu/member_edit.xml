@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/editMember"
+        android:title="Edit Member" />
+
+    <item android:id="@+id/deleteMember"
+        android:title="Delete Member" />
+
+    <item android:id="@+id/addTeam"
+        android:title="Add Team" />
+
+    <item android:id="@+id/deleteTeam"
+        android:title="Delete Team">
+        <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        </menu>
+    </item>
+</menu>

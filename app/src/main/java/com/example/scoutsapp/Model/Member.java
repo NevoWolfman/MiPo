@@ -1,5 +1,6 @@
 package com.example.scoutsapp.Model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Member {
@@ -8,20 +9,21 @@ public class Member {
     //the team the member is in
     private Team team;
     //the teams that the member is in charge of
-    //can be null if he isn't in charge of any teams
-    private List<Team> subordinates; // goooooons maybe??????
+    //empty if he isn't in charge of any teams
+    private List<Team> goons;
 
     public Member(int id, String name, Team team) {
         this.id = id;
         Name = name;
         this.team = team;
+        goons = new LinkedList<>();
     }
 
-    public Member(int id, String name, Team team, List<Team> subordinates) {
+    public Member(int id, String name, Team team, List<Team> goons) {
         this.id = id;
         Name = name;
         this.team = team;
-        this.subordinates = subordinates;
+        this.goons = goons;
     }
 
     public int getId() {
@@ -48,12 +50,16 @@ public class Member {
         this.team = team;
     }
 
-    public List<Team> getSubordinates() {
-        return subordinates;
+    public List<Team> getGoons() {
+        return goons;
     }
 
-    public void setSubordinates(List<Team> subordinates) {
-        this.subordinates = subordinates;
+    public void setGoons(List<Team> goons) {
+        this.goons = goons;
+    }
+
+    public boolean hasGoons() {
+        return !goons.isEmpty();
     }
 
     @Override

@@ -6,27 +6,13 @@
     tools:context=".UI.OrgManager.ButtonsFragment">
 
     <Button
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnAddTeam"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="25dp"
-        android:text="Add Team"
-        android:textSize="15sp"
-
-
-        />
-
-    <Button
-        android:layout_width="140dp"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:id="@+id/btnAddMember"
-        android:layout_marginRight="25dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:text="Add Member"
-        android:textSize="15sp"
+        android:layout_centerHorizontal="true"
+        android:text="+"
+        android:textSize="20sp"
         />
 
     <Button
@@ -34,7 +20,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/btnBack2"
         android:layout_marginBottom="25dp"
-        android:layout_below="@+id/btnAddTeam"
+        android:layout_below="@+id/btnAddMember"
         android:layout_centerHorizontal="true"
         android:text="Go Back"
         android:textSize="25sp"

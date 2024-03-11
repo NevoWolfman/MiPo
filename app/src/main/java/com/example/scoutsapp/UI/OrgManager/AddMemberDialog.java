@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.example.scoutsapp.R;
 
 public class AddMemberDialog extends DialogFragment {
 
+    TextView tvTitle;
     EditText etID, etName;
     DialogListener listener;
 
@@ -28,6 +30,7 @@ public class AddMemberDialog extends DialogFragment {
         LayoutInflater inflater = getLayoutInflater();
 
         View mainView = inflater.inflate(R.layout.new_member_dialog,null);
+        tvTitle = mainView.findViewById(R.id.tvTitle);
         etID = mainView.findViewById(R.id.etID);
         etName = mainView.findViewById(R.id.etName);
 
