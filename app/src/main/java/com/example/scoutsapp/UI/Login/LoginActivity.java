@@ -3,9 +3,11 @@ package com.example.scoutsapp.UI.Login;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,19 +23,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ModuleLogin moduleLogin;
 
     private EditText etEmail, etPassword;
+    private CheckBox cbRememberMe;
     private Button btnLogin;
     private TextView tvSignUp, tvForgot;
+    public final String SAVED_CREDENTIALS = "credentials";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         moduleLogin = new ModuleLogin(this);
-
+        String email = moduleLogin.checkCredentials();
+        if(email != null)
+        {
+            moduleLogin.logIn(email);
+        }
 
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
+        cbRememberMe = findViewById(R.id.cbRemeberMe);
         btnLogin = findViewById(R.id.btnLogin);
         tvSignUp = findViewById(R.id.tvSignUp);
         tvForgot = findViewById(R.id.tvForgot);
@@ -54,9 +63,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             else
             {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.putExtra("email", etEmail.getText().toString());
-                startActivity(intent);
+                if(cbRememberMe.isChecked())
+                {
+                    moduleLogin.rememberMe(etEmail.getText().toString(), etPassword.getText().toString());
+                }
+                moduleLogin.logIn(etEmail.getText().toString());
             }
         }
         else if(view == tvSignUp)

@@ -22,7 +22,7 @@ import com.example.scoutsapp.R;
 import java.util.LinkedList;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a list of Members.
  */
 public class MemberFragment extends Fragment {
 
@@ -80,7 +80,12 @@ public class MemberFragment extends Fragment {
 
     public void notifyMemberInserted(int position)
     {
-        recyclerView.getAdapter().notifyItemInserted(position);
+        try {
+            recyclerView.getAdapter().notifyItemInserted(position);
+        }catch (NullPointerException e)
+        {
+           recyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 
     @Override

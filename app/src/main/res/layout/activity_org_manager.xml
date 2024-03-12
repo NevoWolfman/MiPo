@@ -48,6 +48,4 @@
         class="com.example.scoutsapp.UI.OrgManager.ButtonsFragment"
         />
 
-    <!--    TODO: make dialog for updating/deleting teams/members for long press in the list  -->
-
 </RelativeLayout>

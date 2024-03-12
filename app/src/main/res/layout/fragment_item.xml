@@ -6,7 +6,6 @@
     android:orientation="horizontal"
     android:clickable="true">
 
-    <!-- TODO: add a checkbox for if the member has subordinates -->
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

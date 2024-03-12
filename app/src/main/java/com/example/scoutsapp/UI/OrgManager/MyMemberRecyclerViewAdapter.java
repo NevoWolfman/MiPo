@@ -3,6 +3,7 @@ package com.example.scoutsapp.UI.OrgManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,16 +50,22 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         public final TextView name, id;
         public final CheckBox cbHasGoons;
         public Member member;
 
         public ViewHolder(View view) {
             super(view);
+            view.setOnCreateContextMenuListener(this);
             name = view.findViewById(R.id.MemberName);
             id = view.findViewById(R.id.MemberID);
             cbHasGoons = view.findViewById(R.id.cbHasTeam);
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
         }
     }
 }
