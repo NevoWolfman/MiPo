@@ -72,7 +72,7 @@ public class MemberFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyMemberRecyclerViewAdapter(requireContext(), parent.getCurrent_team().getMembers()));
+            recyclerView.setAdapter(new MyMemberRecyclerViewAdapter((OrgManagerActivity) requireActivity(), parent.getCurrent_team().getMembers()));
             registerForContextMenu(recyclerView);
         }
         return view;
@@ -94,13 +94,13 @@ public class MemberFragment extends Fragment {
         requireActivity().getMenuInflater().inflate(R.menu.member_edit, menu);
     }
 
-    //TODO: make this work
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
+        //TODO: fix the info being null
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int id = item.getItemId();
         if(id == R.id.editMember){
-            parent.showEditMemberDialog(parent.getCurrent_team().getMembers().get((int)info.id).getName());
+            parent.showEditMemberDialog(parent.getCurrent_team().getMembers().get((int)info.position).getName());
         }
         else if (id == R.id.deleteMember) {
 

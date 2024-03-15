@@ -1,12 +1,16 @@
 package com.example.scoutsapp.UI.OrgManager;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,11 +22,11 @@ import java.util.List;
 
 public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRecyclerViewAdapter.ViewHolder> {
 
-    Context context;
+    OrgManagerActivity activity;
     private final List<Member> mValues;
 
-    public MyMemberRecyclerViewAdapter(Context context, List<Member> items) {
-        this.context = context;
+    public MyMemberRecyclerViewAdapter(OrgManagerActivity activity, List<Member> items) {
+        this.activity = activity;
         mValues = items;
     }
 
@@ -54,9 +58,11 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
         public final TextView name, id;
         public final CheckBox cbHasGoons;
         public Member member;
+        public LinearLayout rootView;
 
         public ViewHolder(View view) {
             super(view);
+            rootView = (LinearLayout) view;
             view.setOnCreateContextMenuListener(this);
             name = view.findViewById(R.id.MemberName);
             id = view.findViewById(R.id.MemberID);
@@ -65,7 +71,8 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
+            menuInfo = new AdapterView.AdapterContextMenuInfo(rootView, mValues.indexOf(member), member.getId());
+            activity.onCreateContextMenu(menu,v,menuInfo);
         }
     }
 }

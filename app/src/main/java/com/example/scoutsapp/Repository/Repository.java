@@ -8,6 +8,7 @@ import com.example.scoutsapp.DB.SQLiteHelper;
 import com.example.scoutsapp.Model.Organization;
 
 public class Repository {
+    //TODO: add a remote database such as MySQL or FireBase
     private SQLiteHelper sqLiteHelper;
 
     public Repository(Context context) {
