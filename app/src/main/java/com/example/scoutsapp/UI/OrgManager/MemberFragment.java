@@ -72,8 +72,8 @@ public class MemberFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyMemberRecyclerViewAdapter((OrgManagerActivity) requireActivity(), parent.getCurrent_team().getMembers()));
-            registerForContextMenu(recyclerView);
+            recyclerView.setAdapter(new MyMemberRecyclerViewAdapter(this, parent.getCurrent_team().getMembers()));
+            parent.registerForContextMenu(recyclerView);
         }
         return view;
     }

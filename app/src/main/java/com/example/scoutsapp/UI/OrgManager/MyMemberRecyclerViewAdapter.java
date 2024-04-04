@@ -21,12 +21,11 @@ import com.example.scoutsapp.R;
 import java.util.List;
 
 public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRecyclerViewAdapter.ViewHolder> {
-
-    OrgManagerActivity activity;
+    MemberFragment fragment;
     private final List<Member> mValues;
 
-    public MyMemberRecyclerViewAdapter(OrgManagerActivity activity, List<Member> items) {
-        this.activity = activity;
+    public MyMemberRecyclerViewAdapter(MemberFragment fragment, List<Member> items) {
+        this.fragment = fragment;
         mValues = items;
     }
 
@@ -71,8 +70,8 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menuInfo = new AdapterView.AdapterContextMenuInfo(rootView, mValues.indexOf(member), member.getId());
-            activity.onCreateContextMenu(menu,v,menuInfo);
+            menuInfo = new AdapterView.AdapterContextMenuInfo(rootView, getLayoutPosition(), member.getId());
+            fragment.requireActivity().onCreateContextMenu(menu,v,menuInfo);
         }
     }
 }
