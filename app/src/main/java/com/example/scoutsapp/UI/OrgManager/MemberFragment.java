@@ -90,12 +90,11 @@ public class MemberFragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        //TODO: fix the info being null
+        //TODO: finish the rest of the options
         MyMemberRecyclerViewAdapter adapter = (MyMemberRecyclerViewAdapter) recyclerView.getAdapter();
-        int position = adapter.member_selected;
         int id = item.getItemId();
         if (id == R.id.deleteMember) {
-
+            adapter.removeMember(adapter.member_selected);
         }
         else if (id == R.id.addTeam) {
 

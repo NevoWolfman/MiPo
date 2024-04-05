@@ -4,7 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -32,11 +35,10 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
     }
 
     @Override
+    @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rootView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_item, parent, false);
-
-        //TODO: open a menu to decide which of the teams of goons are going to be the current team, and then switch the list
         return new ViewHolder(rootView);
     }
 
@@ -79,5 +81,26 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             fragment.requireActivity().getMenuInflater().inflate(R.menu.member_edit, menu);
         }
+    }
+
+    public void removeMember(int position)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(fragment.requireActivity());
+        builder.setTitle("You want to delete this member?")
+                .setMessage("this will delete him and all of his teams (unless someone else is in charge of the team")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        members.remove(position);
+                        notifyItemRemoved(position);
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.create();
+        builder.show();
     }
 }
