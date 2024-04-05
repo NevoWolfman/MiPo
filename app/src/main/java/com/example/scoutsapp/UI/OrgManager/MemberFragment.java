@@ -96,10 +96,10 @@ public class MemberFragment extends Fragment {
         if (id == R.id.deleteMember) {
             adapter.removeMember(adapter.member_selected);
         }
-        else if (id == R.id.addTeam) {
+        else if (id == R.id.attachTeam) {
 
         }
-        else if (id == R.id.deleteTeams) {
+        else if (id == R.id.removeTeams) {
 
         }
         else {

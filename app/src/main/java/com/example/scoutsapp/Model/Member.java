@@ -10,20 +10,20 @@ public class Member {
     private Team team;
     //the teams that the member is in charge of
     //empty if he isn't in charge of any teams
-    private List<Team> goons;
+    private List<Team> teams;
 
     public Member(int id, String name, Team team) {
         this.id = id;
         Name = name;
         this.team = team;
-        goons = new LinkedList<>();
+        teams = new LinkedList<>();
     }
 
-    public Member(int id, String name, Team team, List<Team> goons) {
+    public Member(int id, String name, Team team, List<Team> teams) {
         this.id = id;
         Name = name;
         this.team = team;
-        this.goons = goons;
+        this.teams = teams;
     }
 
     public int getId() {
@@ -50,16 +50,16 @@ public class Member {
         this.team = team;
     }
 
-    public List<Team> getGoons() {
-        return goons;
+    public List<Team> getTeams() {
+        return teams;
     }
 
-    public void setGoons(List<Team> goons) {
-        this.goons = goons;
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
-    public boolean hasGoons() {
-        return !goons.isEmpty();
+    public boolean hasTeams() {
+        return !teams.isEmpty();
     }
 
     @Override

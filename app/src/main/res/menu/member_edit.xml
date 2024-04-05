@@ -3,12 +3,12 @@
     <item android:id="@+id/deleteMember"
         android:title="Delete Member" />
 
-    <item android:id="@+id/addTeam"
-        android:title="Add Team" />
+    <item android:id="@+id/attachTeam"
+        android:title="Attach Team" />
 
-    <item android:id="@+id/deleteTeams"
-        android:title="Delete Teams">
-        <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/removeTeams"
+        android:title="Remove Teams">
+        <menu>
 
         </menu>
     </item>

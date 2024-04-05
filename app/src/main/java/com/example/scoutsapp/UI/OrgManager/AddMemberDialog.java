@@ -15,22 +15,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.scoutsapp.Model.Member;
 import com.example.scoutsapp.R;
 
 public class AddMemberDialog extends DialogFragment {
-
-    TextView tvTitle;
     EditText etID, etName;
-    DialogListener listener;
+    OrgManagerActivity activity;
 
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState){
+        activity = (OrgManagerActivity) requireActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         LayoutInflater inflater = getLayoutInflater();
 
         View mainView = inflater.inflate(R.layout.new_member_dialog,null);
-        tvTitle = mainView.findViewById(R.id.tvTitle);
         etID = mainView.findViewById(R.id.etID);
         etName = mainView.findViewById(R.id.etName);
 
@@ -44,43 +43,26 @@ public class AddMemberDialog extends DialogFragment {
 
                         if(name.isEmpty() || id_str.isEmpty())
                         {
-                            Toast.makeText(requireContext(), "Please fill out", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "Please fill out", Toast.LENGTH_SHORT).show();
                         }
-                        else if (listener != null)
+                        else
                         {
                             try {
                                 id = Integer.parseInt(id_str);
                             }catch (NumberFormatException e){
-                                Toast.makeText(requireContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(activity, "Invalid ID", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            listener.OnPositiveClick(AddMemberDialog.this, name, id);
+                            activity.addMember(new Member(id, name, activity.getCurrent_team()));
                         }
                     }
                 }).setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         AddMemberDialog.this.getDialog().cancel();
-                        listener.OnNegativeClick(AddMemberDialog.this);
                     }
                 });
 
         return builder.create();
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        try {
-            listener = (DialogListener) context;
-        }catch (ClassCastException e) {
-            throw new ClassCastException(getActivity().toString() + "must implement DialogListener");
-        }
-    }
-
-    public interface DialogListener
-    {
-        void OnPositiveClick(DialogFragment dialog, String name, int id);
-        void OnNegativeClick(DialogFragment dialog);
     }
 }

@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.scoutsapp.Model.Member;
+import com.example.scoutsapp.Model.Team;
 import com.example.scoutsapp.R;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
         holder.member = members.get(position);
         holder.name.setText(holder.member.getName());
         holder.id.setText(String.valueOf(holder.member.getId()));
-        holder.cbHasGoons.setChecked(holder.member.hasGoons());
+        holder.cbHasGoons.setChecked(holder.member.hasTeams());
     }
 
     @Override
@@ -102,5 +103,10 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
                 });
         builder.create();
         builder.show();
+    }
+
+    public void addTeamToMember(int position, Team team)
+    {
+        members.get(position).getTeams().add(team);
     }
 }

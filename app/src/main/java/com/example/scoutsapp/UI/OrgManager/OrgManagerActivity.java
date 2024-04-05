@@ -23,7 +23,10 @@ import com.example.scoutsapp.R;
 import com.example.scoutsapp.UI.Main.MainActivity;
 import com.example.scoutsapp.UI.NewOrg.NewOrgActivity;
 
-public class OrgManagerActivity extends AppCompatActivity implements AddMemberDialog.DialogListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class OrgManagerActivity extends AppCompatActivity {
 
     private TextView tvTeamName;
     private Organization org;
@@ -31,12 +34,16 @@ public class OrgManagerActivity extends AppCompatActivity implements AddMemberDi
     private MemberFragment list;
     private ButtonsFragment buttons;
     private AddMemberDialog addMemberDialog;
+    private AddTeamDialog addTeamDialog;
     private final String addMemberDialog_TAG = "addMember";
+    private final String addTeamDialog_TAG = "addTeam";
+    private List<Team> allTeams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         org = new Organization(getIntent().getStringExtra("name"), getIntent().getStringExtra("password"));
         current_team = org.getAdmins();
+        allTeams = new ArrayList<>();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_org_manager);
@@ -61,20 +68,16 @@ public class OrgManagerActivity extends AppCompatActivity implements AddMemberDi
         this.current_team = current_team;
     }
 
-    @Override
-    public void OnPositiveClick(DialogFragment dialog, String name, int id) {
-        addMember(new Member(id, name, current_team));
-    }
-
-    @Override
-    public void OnNegativeClick(DialogFragment dialog) {
-        return;
-    }
-
     public void showAddMemberDialog()
     {
         addMemberDialog = new AddMemberDialog();
         addMemberDialog.show(getSupportFragmentManager(), addMemberDialog_TAG);
+    }
+
+    public void showAddTeamDialog()
+    {
+        addTeamDialog = new AddTeamDialog();
+        addTeamDialog.show(getSupportFragmentManager(), addTeamDialog_TAG);
     }
 
     public void addMember(Member member)
@@ -82,5 +85,17 @@ public class OrgManagerActivity extends AppCompatActivity implements AddMemberDi
         int pos = current_team.getMembers().size();
         current_team.getMembers().add(member);
         list.notifyMemberInserted(pos);
+    }
+
+    public void addTeam(Team team){
+        allTeams.add(team);
+    }
+
+    public List<Team> getAllTeams() {
+        return allTeams;
+    }
+
+    public void setAllTeams(List<Team> allTeams) {
+        this.allTeams = allTeams;
     }
 }
