@@ -89,26 +89,18 @@ public class MemberFragment extends Fragment {
     }
 
     @Override
-    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        requireActivity().getMenuInflater().inflate(R.menu.member_edit, menu);
-    }
-
-    @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         //TODO: fix the info being null
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        MyMemberRecyclerViewAdapter adapter = (MyMemberRecyclerViewAdapter) recyclerView.getAdapter();
+        int position = adapter.member_selected;
         int id = item.getItemId();
-        if(id == R.id.editMember){
-            parent.showEditMemberDialog(parent.getCurrent_team().getMembers().get((int)info.position).getName());
-        }
-        else if (id == R.id.deleteMember) {
+        if (id == R.id.deleteMember) {
 
         }
         else if (id == R.id.addTeam) {
 
         }
-        else if (id == R.id.deleteTeam) {
+        else if (id == R.id.deleteTeams) {
 
         }
         else {

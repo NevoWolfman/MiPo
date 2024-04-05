@@ -22,11 +22,13 @@ import java.util.List;
 
 public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRecyclerViewAdapter.ViewHolder> {
     MemberFragment fragment;
-    private final List<Member> mValues;
+    private final List<Member> members;
+    int member_selected;
 
-    public MyMemberRecyclerViewAdapter(MemberFragment fragment, List<Member> items) {
+    public MyMemberRecyclerViewAdapter(MemberFragment fragment, List<Member> members) {
         this.fragment = fragment;
-        mValues = items;
+        this.members = members;
+        member_selected = -1;
     }
 
     @Override
@@ -35,14 +37,12 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
                 .inflate(R.layout.fragment_item, parent, false);
 
         //TODO: open a menu to decide which of the teams of goons are going to be the current team, and then switch the list
-        //TODO: make this open a menu to delete this member or give it a team of goons
-
         return new ViewHolder(rootView);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.member = mValues.get(position);
+        holder.member = members.get(position);
         holder.name.setText(holder.member.getName());
         holder.id.setText(String.valueOf(holder.member.getId()));
         holder.cbHasGoons.setChecked(holder.member.hasGoons());
@@ -50,7 +50,7 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return members.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
@@ -63,6 +63,13 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
             super(view);
             rootView = (LinearLayout) view;
             view.setOnCreateContextMenuListener(this);
+            view.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    member_selected = getBindingAdapterPosition();
+                    return false;
+                }
+            });
             name = view.findViewById(R.id.MemberName);
             id = view.findViewById(R.id.MemberID);
             cbHasGoons = view.findViewById(R.id.cbHasTeam);
@@ -70,8 +77,7 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menuInfo = new AdapterView.AdapterContextMenuInfo(rootView, getLayoutPosition(), member.getId());
-            fragment.requireActivity().onCreateContextMenu(menu,v,menuInfo);
+            fragment.requireActivity().getMenuInflater().inflate(R.menu.member_edit, menu);
         }
     }
 }

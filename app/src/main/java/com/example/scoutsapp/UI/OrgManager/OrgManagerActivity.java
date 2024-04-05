@@ -77,12 +77,6 @@ public class OrgManagerActivity extends AppCompatActivity implements AddMemberDi
         addMemberDialog.show(getSupportFragmentManager(), addMemberDialog_TAG);
     }
 
-    public void showEditMemberDialog(String name)
-    {
-        showAddMemberDialog();
-        addMemberDialog.tvTitle.setText("Edit Member: " + name);
-    }
-
     public void addMember(Member member)
     {
         int pos = current_team.getMembers().size();
