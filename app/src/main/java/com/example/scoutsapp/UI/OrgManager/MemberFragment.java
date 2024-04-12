@@ -4,26 +4,20 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.PopupMenu;
 
 import com.example.scoutsapp.Model.Member;
 import com.example.scoutsapp.Model.Team;
 import com.example.scoutsapp.R;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * A fragment representing a list of Members.
@@ -65,7 +59,7 @@ public class MemberFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_member_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {

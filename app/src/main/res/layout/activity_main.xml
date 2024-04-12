@@ -6,46 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".UI.Main.MainActivity">
 
-    <!-- TODO customize UI and stuff -->
     <TextView
-        android:id="@+id/tvEmail"
+        android:id="@+id/tvMiPo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="MiPo"
+        android:textSize="50sp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:textSize="30sp"
+        android:layout_marginTop="20dp"
         />
 
-    <TextView
-        android:id="@+id/tvPassword"
-        android:layout_below="@+id/tvEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:textSize="30sp"
-        />
-
-    <Button
-        android:id="@+id/btnSignOut"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/tvPassword"
-        android:layout_marginTop="50dp"
-        android:text="Sign Out"
-        android:textSize="25sp"
-        />
-
-    <Button
-        android:id="@+id/btnToNewOrg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/btnSignOut"
+    <!-- TODO: customize UI and stuff -->
+    <!-- TODO: add action bar or somthing at the button to switch between profile, org list or more fragments-->
+    <androidx.viewpager2.widget.ViewPager2
         android:layout_marginTop="25dp"
-        android:text="Create new organization"
-        android:textSize="25sp"
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tvMiPo"
+        android:layout_above="@+id/navbar"
+        />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navbar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
         />
 
 </RelativeLayout>

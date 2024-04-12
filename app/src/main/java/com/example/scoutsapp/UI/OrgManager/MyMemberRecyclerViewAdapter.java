@@ -3,17 +3,12 @@ package com.example.scoutsapp.UI.OrgManager;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,8 +16,6 @@ import android.widget.TextView;
 import com.example.scoutsapp.Model.Member;
 import com.example.scoutsapp.Model.Team;
 import com.example.scoutsapp.R;
-
-import java.util.List;
 
 public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRecyclerViewAdapter.ViewHolder> {
     MemberFragment fragment;
@@ -39,7 +32,7 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
     @NonNull
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View rootView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
+                .inflate(R.layout.fragment_member, parent, false);
         return new ViewHolder(rootView);
     }
 

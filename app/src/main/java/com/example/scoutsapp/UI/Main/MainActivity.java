@@ -1,6 +1,11 @@
 package com.example.scoutsapp.UI.Main;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,11 +23,13 @@ import com.example.scoutsapp.UI.Login.LoginActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView tvEmail, tvPassword;
-    private Button btnSignOut, toNewOrg;
+public class MainActivity extends AppCompatActivity {
+    private ViewPager2 viewPager;
 
+    private OrgFragment orgFragment;
     private AddOrganizationDialog addOrganizationDialog;
+
+    private Repository repository;
 
     private List<Organization> allOrgs;
 
@@ -31,43 +38,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        viewPager = findViewById(R.id.viewpager);
+        viewPager.setAdapter(new ScreenSlidePagerAdapter(this));
+
+        repository = new Repository(this);
         allOrgs = new ArrayList<>();
-
-        tvEmail = findViewById(R.id.tvEmail);
-        tvPassword = findViewById(R.id.tvPassword);
-        btnSignOut = findViewById(R.id.btnSignOut);
-        toNewOrg = findViewById(R.id.btnToNewOrg);
-
-        btnSignOut.setOnClickListener(this);
-        toNewOrg.setOnClickListener(this);
-
-        Repository repository = new Repository(this);
-        //TODO: make this not reliant on intent's extras and instead use the DB or smth
-        String email = getIntent().getStringExtra("email");
-        if(email != null)
-        {
-            UserModel user = repository.getUserByEmail(email);
-            if(user != null)
-            {
-                tvEmail.setText(email);
-                tvPassword.setText(user.getPassword());
-            }
-        }
-
-
     }
 
-    @Override
-    public void onClick(View view) {
-        if(view == btnSignOut)
-        {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        }
-        else if(view == toNewOrg)
-        {
-            addOrganizationDialog = new AddOrganizationDialog(this);
-            addOrganizationDialog.show(getSupportFragmentManager(), "addOrg");
-        }
+    public void showAddOrgDialog(){
+        addOrganizationDialog = new AddOrganizationDialog(this);
+        addOrganizationDialog.show(getSupportFragmentManager(), "addOrg");
     }
 
     public List<Organization> getAllOrgs() {
@@ -81,6 +61,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void addOrg(Organization org){
         if(!allOrgs.contains(org)){
             allOrgs.add(org);
+            orgFragment.notifyItemAdded();
+        }
+    }
+
+    public Repository getRepository() {
+        return repository;
+    }
+
+
+    private class ScreenSlidePagerAdapter extends FragmentStateAdapter {
+        public ScreenSlidePagerAdapter(FragmentActivity activity) {
+            super(activity);
+        }
+
+        @NonNull
+        @Override
+        public Fragment createFragment(int position) {
+            if(position == 0)
+            {
+                return new ProfileFragment();
+            }
+            if(position == 1)
+            {
+                orgFragment = new OrgFragment();
+                return orgFragment;
+            }
+            return null;
+        }
+
+        @Override
+        public int getItemCount() {
+            return 2;
         }
     }
 }

@@ -10,4 +10,4 @@
     android:layout_gravity="center"
     app:layoutManager="LinearLayoutManager"
     tools:context=".UI.OrgManager.MemberFragment"
-    tools:listitem="@layout/fragment_item" />
+    tools:listitem="@layout/fragment_member" />
