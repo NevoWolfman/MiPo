@@ -107,10 +107,9 @@ public class MemberFragment extends Fragment {
             team_menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
-                    String name = item.getTitle().toString();
                     Team team = parent.getTeam(item.getTitle().toString());
                     parent.setCurrent_team(team);
-                    teamSwitched();
+                    recyclerView.setAdapter(new MyMemberRecyclerViewAdapter(MemberFragment.this, team));
                     return true;
                 }
             });
@@ -159,9 +158,5 @@ public class MemberFragment extends Fragment {
             return super.onContextItemSelected(item);
         }
         return true;
-    }
-
-    public void teamSwitched(){
-        recyclerView.getAdapter().notifyDataSetChanged();
     }
 }

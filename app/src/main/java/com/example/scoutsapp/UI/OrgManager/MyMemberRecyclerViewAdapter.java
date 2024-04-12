@@ -48,7 +48,6 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
         holder.member = team.getMembers().get(position);
         holder.name.setText(holder.member.getName());
         holder.id.setText(String.valueOf(holder.member.getId()));
-        holder.cbHasGoons.setChecked(holder.member.hasTeams());
     }
 
     @Override
@@ -87,7 +86,7 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
     public void removeMember(int position)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(fragment.requireActivity());
-        builder.setTitle("You want to delete this member?")
+        builder.setTitle("Do you want to delete this member?")
                 .setMessage("this will delete him and all of his teams (unless someone else is in charge of the team")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
