@@ -26,12 +26,12 @@ import java.util.List;
 
 public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRecyclerViewAdapter.ViewHolder> {
     MemberFragment fragment;
-    private final List<Member> members;
+    Team team;
     int member_selected;
 
-    public MyMemberRecyclerViewAdapter(MemberFragment fragment, List<Member> members) {
+    public MyMemberRecyclerViewAdapter(MemberFragment fragment, Team team) {
         this.fragment = fragment;
-        this.members = members;
+        this.team = team;
         member_selected = -1;
     }
 
@@ -45,7 +45,7 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.member = members.get(position);
+        holder.member = team.getMembers().get(position);
         holder.name.setText(holder.member.getName());
         holder.id.setText(String.valueOf(holder.member.getId()));
         holder.cbHasGoons.setChecked(holder.member.hasTeams());
@@ -53,7 +53,7 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
 
     @Override
     public int getItemCount() {
-        return members.size();
+        return team.getMembers().size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
@@ -92,7 +92,7 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        members.remove(position);
+                        team.getMembers().remove(position);
                         notifyItemRemoved(position);
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -105,8 +105,18 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
         builder.show();
     }
 
+    public Member getMember(int position)
+    {
+        return team.getMembers().get(position);
+    }
+
     public void addTeamToMember(int position, Team team)
     {
-        members.get(position).getTeams().add(team);
+        this.team.getMembers().get(position).getTeams().add(team);
+    }
+
+    public Member getMemberSelected()
+    {
+        return team.getMembers().get(member_selected);
     }
 }

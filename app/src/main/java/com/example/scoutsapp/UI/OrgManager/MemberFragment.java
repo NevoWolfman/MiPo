@@ -16,10 +16,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.PopupMenu;
 
+import com.example.scoutsapp.Model.Member;
+import com.example.scoutsapp.Model.Team;
 import com.example.scoutsapp.R;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Members.
@@ -72,7 +76,7 @@ public class MemberFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyMemberRecyclerViewAdapter(this, parent.getCurrent_team().getMembers()));
+            recyclerView.setAdapter(new MyMemberRecyclerViewAdapter(this, parent.getCurrent_team()));
             parent.registerForContextMenu(recyclerView);
         }
         return view;
@@ -90,21 +94,74 @@ public class MemberFragment extends Fragment {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        //TODO: finish the rest of the options
+        //TODO: finish switch
         MyMemberRecyclerViewAdapter adapter = (MyMemberRecyclerViewAdapter) recyclerView.getAdapter();
         int id = item.getItemId();
         if (id == R.id.deleteMember) {
             adapter.removeMember(adapter.member_selected);
+            return true;
+        }
+        PopupMenu team_menu = new PopupMenu(requireContext(), recyclerView.findViewHolderForLayoutPosition(adapter.member_selected).itemView);
+
+        if(id == R.id.switchTeam){
+            team_menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    String name = item.getTitle().toString();
+                    Team team = parent.getTeam(item.getTitle().toString());
+                    parent.setCurrent_team(team);
+                    teamSwitched();
+                    return true;
+                }
+            });
+            Member member = adapter.getMemberSelected();
+            for (int i = 0, n = member.getTeams().size(); i < n; i++) {
+                Team team = member.getTeams().get(i);
+                team_menu.getMenu().add(team.getName());
+            }
+            team_menu.show();
         }
         else if (id == R.id.attachTeam) {
-
+            team_menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    Team team = parent.getTeam(item.getTitle().toString());
+                    adapter.addTeamToMember(adapter.member_selected, team);
+                    return true;
+                }
+            });
+            for (int i = 0, n = parent.getAllTeams().size(); i < n; i++) {
+                Team team = parent.getAllTeams().get(i);
+                if(!adapter.getMemberSelected().getTeams().contains(team)){
+                    team_menu.getMenu().add(team.getName());
+                }
+            }
+            team_menu.show();
         }
         else if (id == R.id.removeTeams) {
-
+            team_menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    String name = item.getTitle().toString();
+                    Team team = parent.getTeam(item.getTitle().toString());
+                    adapter.getMemberSelected().getTeams().remove(team);
+                    return true;
+                }
+            });
+            Member member = adapter.getMemberSelected();
+            for (int i = 0, n = member.getTeams().size(); i < n; i++) {
+                Team team = member.getTeams().get(i);
+                team_menu.getMenu().add(team.getName());
+            }
+            team_menu.show();
         }
         else {
             return super.onContextItemSelected(item);
         }
         return true;
+    }
+
+    public void teamSwitched(){
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 }

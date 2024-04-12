@@ -30,7 +30,7 @@ public class OrgManagerActivity extends AppCompatActivity {
 
     private TextView tvTeamName;
     private Organization org;
-    private Team current_team;
+    public Team current_team;
     private MemberFragment list;
     private ButtonsFragment buttons;
     private AddMemberDialog addMemberDialog;
@@ -60,14 +60,6 @@ public class OrgManagerActivity extends AppCompatActivity {
         return org;
     }
 
-    public Team getCurrent_team() {
-        return current_team;
-    }
-
-    public void setCurrent_team(Team current_team) {
-        this.current_team = current_team;
-    }
-
     public void showAddMemberDialog()
     {
         addMemberDialog = new AddMemberDialog();
@@ -90,6 +82,16 @@ public class OrgManagerActivity extends AppCompatActivity {
     public void addTeam(Team team){
         allTeams.add(team);
     }
+    public Team getTeam(String name) {
+        for (int i = 0; i < allTeams.size(); i++) {
+            Team team = allTeams.get(i);
+            if(team.getName().equals(name))
+            {
+                return team;
+            }
+        }
+        return null;
+    }
 
     public List<Team> getAllTeams() {
         return allTeams;
@@ -97,5 +99,13 @@ public class OrgManagerActivity extends AppCompatActivity {
 
     public void setAllTeams(List<Team> allTeams) {
         this.allTeams = allTeams;
+    }
+
+    public Team getCurrent_team() {
+        return current_team;
+    }
+
+    public void setCurrent_team(Team current_team) {
+        this.current_team = current_team;
     }
 }
