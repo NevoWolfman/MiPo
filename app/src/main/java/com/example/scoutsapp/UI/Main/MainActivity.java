@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,14 +20,18 @@ import com.example.scoutsapp.R;
 import com.example.scoutsapp.Repository.Repository;
 import com.example.scoutsapp.Repository.UserModel;
 import com.example.scoutsapp.UI.Login.LoginActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
+    private BottomNavigationView navbar;
 
     private OrgFragment orgFragment;
+    private ProfileFragment profileFragment;
     private AddOrganizationDialog addOrganizationDialog;
 
     private Repository repository;
@@ -40,6 +45,28 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(new ScreenSlidePagerAdapter(this));
+        navbar = findViewById(R.id.navbar);
+
+        orgFragment = new OrgFragment();
+        profileFragment = new ProfileFragment();
+
+        navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if(id == R.id.itemProfile)
+                {
+                    viewPager.setCurrentItem(0);
+                    return true;
+                }
+                if(id == R.id.itemOrgs)
+                {
+                    viewPager.setCurrentItem(1);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         repository = new Repository(this);
         allOrgs = new ArrayList<>();
@@ -80,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             if(position == 0)
             {
-                return new ProfileFragment();
+                return profileFragment;
             }
             if(position == 1)
             {
-                orgFragment = new OrgFragment();
+
                 return orgFragment;
             }
             return null;
