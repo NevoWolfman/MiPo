@@ -9,20 +9,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.scoutsapp.Model.Organization;
 import com.example.scoutsapp.R;
 import com.example.scoutsapp.Repository.Repository;
 import com.example.scoutsapp.Repository.UserModel;
 import com.example.scoutsapp.UI.Login.LoginActivity;
-import com.example.scoutsapp.UI.NewOrg.NewOrgActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView tvEmail, tvPassword;
     private Button btnSignOut, toNewOrg;
 
+    private AddOrganizationDialog addOrganizationDialog;
+
+    private List<Organization> allOrgs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        allOrgs = new ArrayList<>();
+
         tvEmail = findViewById(R.id.tvEmail);
         tvPassword = findViewById(R.id.tvPassword);
         btnSignOut = findViewById(R.id.btnSignOut);
@@ -55,7 +65,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(view == toNewOrg)
         {
-            startActivity(new Intent(MainActivity.this, NewOrgActivity.class));
+            addOrganizationDialog = new AddOrganizationDialog(this);
+            addOrganizationDialog.show(getSupportFragmentManager(), "addOrg");
+        }
+    }
+
+    public List<Organization> getAllOrgs() {
+        return allOrgs;
+    }
+
+    public void setAllOrgs(List<Organization> allOrgs) {
+        this.allOrgs = allOrgs;
+    }
+
+    public void addOrg(Organization org){
+        if(!allOrgs.contains(org)){
+            allOrgs.add(org);
         }
     }
 }

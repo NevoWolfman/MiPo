@@ -5,18 +5,15 @@ import java.util.List;
 
 public class Organization {
     private String Name;
-    private String Password;
     private Team admins;
 
-    public Organization(String name, String password, Team admins) {
+    public Organization(String name, Team admins) {
         Name = name;
-        Password = password;
         this.admins = admins;
     }
 
-    public Organization(String name, String password) {
+    public Organization(String name) {
         Name = name;
-        Password = password;
         this.admins = new Team("admins");
     }
 
@@ -26,14 +23,6 @@ public class Organization {
 
     public void setName(String name) {
         Name = name;
-    }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
     }
 
     public Team getAdmins() {

@@ -20,8 +20,6 @@ import com.example.scoutsapp.Model.Member;
 import com.example.scoutsapp.Model.Organization;
 import com.example.scoutsapp.Model.Team;
 import com.example.scoutsapp.R;
-import com.example.scoutsapp.UI.Main.MainActivity;
-import com.example.scoutsapp.UI.NewOrg.NewOrgActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +33,11 @@ public class OrgManagerActivity extends AppCompatActivity {
     private ButtonsFragment buttons;
     private AddMemberDialog addMemberDialog;
     private AddTeamDialog addTeamDialog;
-    private final String addMemberDialog_TAG = "addMember";
-    private final String addTeamDialog_TAG = "addTeam";
     private List<Team> allTeams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        org = new Organization(getIntent().getStringExtra("name"), getIntent().getStringExtra("password"));
+        org = new Organization(getIntent().getStringExtra("name"));
         current_team = org.getAdmins();
         allTeams = new ArrayList<>();
 
@@ -62,14 +58,14 @@ public class OrgManagerActivity extends AppCompatActivity {
 
     public void showAddMemberDialog()
     {
-        addMemberDialog = new AddMemberDialog();
-        addMemberDialog.show(getSupportFragmentManager(), addMemberDialog_TAG);
+        addMemberDialog = new AddMemberDialog(this);
+        addMemberDialog.show(getSupportFragmentManager(), "addMember");
     }
 
     public void showAddTeamDialog()
     {
-        addTeamDialog = new AddTeamDialog();
-        addTeamDialog.show(getSupportFragmentManager(), addTeamDialog_TAG);
+        addTeamDialog = new AddTeamDialog(this);
+        addTeamDialog.show(getSupportFragmentManager(), "addTeam");
     }
 
     public void addMember(Member member)

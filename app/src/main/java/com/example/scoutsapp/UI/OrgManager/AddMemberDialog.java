@@ -22,10 +22,13 @@ public class AddMemberDialog extends DialogFragment {
     EditText etID, etName;
     OrgManagerActivity activity;
 
+    public AddMemberDialog(OrgManagerActivity activity){
+        this.activity = activity;
+    }
+
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState){
-        activity = (OrgManagerActivity) requireActivity();
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         LayoutInflater inflater = getLayoutInflater();
 

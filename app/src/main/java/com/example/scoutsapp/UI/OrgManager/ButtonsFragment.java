@@ -9,11 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import com.example.scoutsapp.Model.Member;
 import com.example.scoutsapp.R;
-import com.example.scoutsapp.UI.Main.MainActivity;
-import com.example.scoutsapp.UI.NewOrg.NewOrgActivity;
+
 
 public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
@@ -52,10 +49,6 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
         else if(view == createTeam)
         {
             parent.showAddTeamDialog();
-        }
-        else if(view == back)
-        {
-            startActivity(new Intent(requireContext(), NewOrgActivity.class));
         }
     }
 }
