@@ -17,31 +17,20 @@ public class Repository {
 
     public long addUser(UserModel user)
     {
-        return sqLiteHelper.addItem(user);
-    }
-
-    public UserModel getUserByID(int id)
-    {
-        return sqLiteHelper.getItemByID(id);
+        return sqLiteHelper.addUser(user);
     }
 
     public UserModel getUserByEmail(String email)
     {
-        return sqLiteHelper.getItemByEmail(email);
+        return sqLiteHelper.getUserByEmail(email);
     }
 
-    public UserModel getUserByUser(UserModel userModel)
+    public long deleteUserByEmail(String email)
     {
-        return sqLiteHelper.getItemByItem(userModel);
+        return sqLiteHelper.deleteUserByEmail(email);
     }
 
-    public long deleteUserByID(int id)
-    {
-        return sqLiteHelper.deleteItemByID(id);
-    }
-
-    public long updateUserByID(int id, UserModel user)
-    {
-        return sqLiteHelper.updateItemByID(id, user);
+    public long updateUserByEmail(String email, UserModel user) {
+        return sqLiteHelper.updateUserByEmail(email, user);
     }
 }
