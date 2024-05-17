@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
                     if(!moduleLogin.onSignInResult(result)){
                         Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                        startSignIn();
                     }
                 }
             }
@@ -74,15 +75,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         tvForgot.setOnClickListener(this);
 
 
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build());
-
-        Intent signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build();
-        signInLauncher.launch(signInIntent);
+        startSignIn();
     }
 
     @Override
@@ -113,5 +106,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //TODO: add the password recovery thing
             Toast.makeText(this, "work in progress", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void startSignIn(){
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build());
+
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build();
+        signInLauncher.launch(signInIntent);
     }
 }
