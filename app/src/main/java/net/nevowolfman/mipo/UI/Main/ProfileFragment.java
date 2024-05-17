@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -58,7 +59,7 @@ public class ProfileFragment extends Fragment {
                         .signOut(requireContext())
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             public void onComplete(@NonNull Task<Void> task) {
-                                startActivity(new Intent(requireContext(), LoginActivity.class));
+                                Toast.makeText(parent, "Signed Out", Toast.LENGTH_SHORT).show();
                             }
                         });
             }
