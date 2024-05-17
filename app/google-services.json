@@ -12,7 +12,20 @@
           "package_name": "net.nevowolfman.mipo"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "285390674432-892bnnh7ov28te5k96v7e32o1fn09jel.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.nevowolfman.mipo",
+            "certificate_hash": "5f9c866b342b321b2daf16a8f10368e301ac28dd"
+          }
+        },
+        {
+          "client_id": "285390674432-fc490opds1v0npotukm04p7u8gdf1hga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB5xY1FKbpKGE7jdLhBfYfPaZBQhKeJapA"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285390674432-fc490opds1v0npotukm04p7u8gdf1hga.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

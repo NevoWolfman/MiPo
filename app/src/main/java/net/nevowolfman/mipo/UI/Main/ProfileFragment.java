@@ -1,8 +1,11 @@
 package net.nevowolfman.mipo.UI.Main;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,6 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import net.nevowolfman.mipo.R;
 import net.nevowolfman.mipo.Repository.UserModel;
@@ -20,6 +27,9 @@ public class ProfileFragment extends Fragment {
     private Button btnSignOut;
 
     private MainActivity parent;
+
+    private SharedPreferences prefs;
+    public final String SAVED_CREDENTIALS = "credentials";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +44,23 @@ public class ProfileFragment extends Fragment {
         tvEmail = root.findViewById(R.id.tvEmail);
         btnSignOut = root.findViewById(R.id.btnSignOut);
 
+        prefs = parent.getSharedPreferences(SAVED_CREDENTIALS, Activity.MODE_PRIVATE);
+
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(requireContext(), LoginActivity.class));
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.remove("email");
+                editor.remove("pass");
+                editor.apply();
+
+                AuthUI.getInstance()
+                        .signOut(requireContext())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            public void onComplete(@NonNull Task<Void> task) {
+                                startActivity(new Intent(requireContext(), LoginActivity.class));
+                            }
+                        });
             }
         });
 

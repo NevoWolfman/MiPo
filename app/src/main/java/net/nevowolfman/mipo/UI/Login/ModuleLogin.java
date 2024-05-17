@@ -1,9 +1,17 @@
 package net.nevowolfman.mipo.UI.Login;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.widget.Toast;
+
+import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import net.nevowolfman.mipo.Repository.Repository;
 import net.nevowolfman.mipo.Repository.UserModel;
@@ -47,5 +55,15 @@ public class ModuleLogin {
         Intent intent = new Intent(activity, MainActivity.class);
         intent.putExtra("email", email);
         activity.startActivity(intent);
+    }
+
+    public boolean onSignInResult(FirebaseAuthUIAuthenticationResult result) {
+        IdpResponse response = result.getIdpResponse();
+        if (response != null && result.getResultCode() == RESULT_OK) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            logIn(user.getEmail());
+            return true;
+        }
+        return false;
     }
 }
