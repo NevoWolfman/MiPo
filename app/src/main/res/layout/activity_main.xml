@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.Main.MainActivity">
+    tools:context="net.nevowolfman.mipo.UI.Main.MainActivity">
 
     <TextView
         android:id="@+id/tvMiPo"
@@ -17,7 +17,6 @@
         />
 
     <!-- TODO: customize UI and stuff -->
-    <!-- TODO: add action bar or somthing at the button to switch between profile, org list or more fragments-->
     <androidx.viewpager2.widget.ViewPager2
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"

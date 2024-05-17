@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".UI.OrgManager.ButtonsFragment">
+    tools:context="net.nevowolfman.mipo.UI.OrgManager.ButtonsFragment">
 
     <Button
         android:layout_width="wrap_content"
