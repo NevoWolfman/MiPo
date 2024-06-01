@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
                     if(!onSignInResult(result)){
-                        Toast.makeText(MainActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Login Failed" + result.getResultCode(), Toast.LENGTH_SHORT).show();
                         startSignIn();
                     }
                 }
@@ -92,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
         repository = new Repository(this);
         allOrgs = new ArrayList<>();
+
+        startSignIn();
     }
 
     public void showAddOrgDialog(){
@@ -157,8 +159,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void startSignIn(){
         List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build(),
-                new AuthUI.IdpConfig.GoogleBuilder().build());
+                new AuthUI.IdpConfig.EmailBuilder().build());
+                //new AuthUI.IdpConfig.GoogleBuilder().build()); does not work
 
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()

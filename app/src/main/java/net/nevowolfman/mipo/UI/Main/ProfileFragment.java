@@ -60,6 +60,7 @@ public class ProfileFragment extends Fragment {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             public void onComplete(@NonNull Task<Void> task) {
                                 Toast.makeText(parent, "Signed Out", Toast.LENGTH_SHORT).show();
+                                ((MainActivity)requireActivity()).startSignIn();
                             }
                         });
             }
