@@ -1,8 +1,10 @@
 package net.nevowolfman.mipo.Model;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+//represents a team of members
 public class Team {
     private String name;
     private List<Member> members;

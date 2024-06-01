@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 import net.nevowolfman.mipo.R;
 import net.nevowolfman.mipo.Repository.UserModel;
@@ -66,15 +67,17 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        String email = parent.getIntent().getStringExtra("email");
-        if(email != null)
-        {
-            UserModel user = parent.getRepository().getUserByEmail(email);
-            if(user != null)
-            {
-                tvEmail.setText(email);
-            }
-        }
+        tvEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
+//        String email = parent.getIntent().getStringExtra("email");
+//        if(email != null)
+//        {
+//            UserModel user = parent.getRepository().getUserByEmail(email);
+//            if(user != null)
+//            {
+//                tvEmail.setText(email);
+//            }
+//        }
         return root;
     }
 }

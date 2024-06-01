@@ -5,6 +5,7 @@ import net.nevowolfman.mipo.Model.Organization;
 import java.util.ArrayList;
 import java.util.List;
 
+//represents a user of the app
 public class UserModel {
     private String email;
     private String password;

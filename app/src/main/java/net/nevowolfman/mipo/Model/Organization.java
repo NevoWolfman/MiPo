@@ -1,5 +1,6 @@
 package net.nevowolfman.mipo.Model;
 
+//represents an Organization
 public class Organization {
     private String Name;
     private Team admins;

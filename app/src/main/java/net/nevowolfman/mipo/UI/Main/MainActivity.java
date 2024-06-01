@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private Repository repository;
 
     private List<Organization> allOrgs;
-    private FirebaseUser currentUser;
 
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
@@ -55,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Login Failed" + result.getResultCode(), Toast.LENGTH_SHORT).show();
                         startSignIn();
                     }
+
                 }
             }
     );
@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         if(!allOrgs.contains(org)){
             allOrgs.add(org);
             orgFragment.notifyItemAdded();
+            repository.addOrg(org);
         }
     }
 
@@ -151,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onSignInResult(FirebaseAuthUIAuthenticationResult result) {
         IdpResponse response = result.getIdpResponse();
         if (response != null && result.getResultCode() == RESULT_OK) {
-            currentUser = FirebaseAuth.getInstance().getCurrentUser();
             return true;
         }
         return false;

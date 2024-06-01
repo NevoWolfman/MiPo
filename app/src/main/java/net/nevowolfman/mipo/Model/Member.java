@@ -3,11 +3,14 @@ package net.nevowolfman.mipo.Model;
 import java.util.LinkedList;
 import java.util.List;
 
+//represents a member of a team
 public class Member {
     private int id;
     private String Name;
+
     //the team the member is in
     private Team team;
+
     //the teams that the member is in charge of
     //empty if he isn't in charge of any teams
     private List<Team> teams;
