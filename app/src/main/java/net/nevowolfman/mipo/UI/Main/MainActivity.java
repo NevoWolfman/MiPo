@@ -54,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Login Failed" + result.getResultCode(), Toast.LENGTH_SHORT).show();
                         startSignIn();
                     }
-
+                    else{
+                        profileFragment.setTVEmail((FirebaseAuth.getInstance().getCurrentUser().getEmail()));
+                    }
                 }
             }
     );

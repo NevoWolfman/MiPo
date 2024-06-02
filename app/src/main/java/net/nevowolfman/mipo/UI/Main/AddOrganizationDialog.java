@@ -14,6 +14,9 @@ import androidx.fragment.app.DialogFragment;
 
 import net.nevowolfman.mipo.Model.Organization;
 import net.nevowolfman.mipo.R;
+import net.nevowolfman.mipo.Repository.Repository;
+
+import java.util.List;
 
 public class AddOrganizationDialog extends DialogFragment {
     EditText etName;
@@ -41,14 +44,19 @@ public class AddOrganizationDialog extends DialogFragment {
                     return;
                 }
 
-                for (int i = 0; i < activity.getAllOrgs().size(); i++) {
-                    if(activity.getAllOrgs().get(i).getName().equals(name))
-                    {
-                        Toast.makeText(activity, "Organization already exists", Toast.LENGTH_SHORT).show();
-                        return;
+                activity.getRepository().getAllOrgs(new Repository.GetAllOrgsListener() {
+                    @Override
+                    public void onComplete(List<Organization> orgs) {
+                        for (int i = 0; i < orgs.size(); i++) {
+                            if(orgs.get(i).getName().equals(name))
+                            {
+                                Toast.makeText(activity, "Organization already exists", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+                        activity.addOrg(new Organization(name));
                     }
-                }
-                activity.addOrg(new Organization(name));
+                });
             }
         }).setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
             @Override

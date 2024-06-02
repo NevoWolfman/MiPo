@@ -89,7 +89,7 @@ public class Repository {
                 });
     }
 
-    interface GetAllOrgsListener {
+    public interface GetAllOrgsListener {
         public void onComplete(List<Organization> orgs);
     }
 }

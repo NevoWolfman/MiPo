@@ -1,13 +1,16 @@
 package net.nevowolfman.mipo.UI.Main;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +70,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        tvEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+
 
 //        String email = parent.getIntent().getStringExtra("email");
 //        if(email != null)
@@ -79,5 +82,9 @@ public class ProfileFragment extends Fragment {
 //            }
 //        }
         return root;
+    }
+
+    public void setTVEmail(String str) {
+        tvEmail.setText(str);
     }
 }
