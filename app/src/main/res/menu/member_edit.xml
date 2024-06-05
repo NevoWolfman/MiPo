@@ -3,11 +3,9 @@
     <item android:id="@+id/deleteMember"
         android:title="Delete Member" />
 
-    <item android:id="@+id/attachTeam"
-        android:title="Attach Team" />
+    <item android:id="@+id/editTeam"
+        android:title="Attach/Remove Team" />
 
-    <item android:id="@+id/removeTeams"
-        android:title="Remove Teams" />
 
     <item android:id="@+id/switchTeam"
         android:title="Switch Team" />

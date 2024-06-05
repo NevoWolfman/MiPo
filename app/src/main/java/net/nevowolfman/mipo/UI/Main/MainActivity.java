@@ -73,6 +73,15 @@ public class MainActivity extends AppCompatActivity {
         repository = new Repository(this);
         allOrgs = new ArrayList<>();
         org = new Organization("org");
+        repository.getOrg(new Repository.GetOrgListener() {
+            @Override
+            public void onComplete(Organization _org) {
+                if(_org != null) {
+                    org = _org;
+                }
+            }
+        });
+
 
         viewPager = findViewById(R.id.viewpager);
         ScreenSlidePagerAdapter pager_adapter = new ScreenSlidePagerAdapter(this);
@@ -121,8 +130,9 @@ public class MainActivity extends AppCompatActivity {
         if(!allOrgs.contains(org)){
             allOrgs.add(org);
             orgFragment.notifyItemAdded();
-            repository.addOrg(org);
         }
+        repository.addOrg(org);
+        this.org = org;
     }
 
 

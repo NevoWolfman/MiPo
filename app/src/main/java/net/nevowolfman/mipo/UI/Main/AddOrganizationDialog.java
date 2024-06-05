@@ -44,19 +44,7 @@ public class AddOrganizationDialog extends DialogFragment {
                     return;
                 }
 
-                activity.getRepository().getAllOrgs(new Repository.GetAllOrgsListener() {
-                    @Override
-                    public void onComplete(List<Organization> orgs) {
-                        for (int i = 0; i < orgs.size(); i++) {
-                            if(orgs.get(i).getName().equals(name))
-                            {
-                                Toast.makeText(activity, "Organization already exists", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                        }
-                        activity.addOrg(new Organization(name));
-                    }
-                });
+                activity.addOrg(new Organization(name));
             }
         }).setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
             @Override

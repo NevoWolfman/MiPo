@@ -69,28 +69,19 @@ public class OrgEditorRecyclerViewAdapter extends RecyclerView.Adapter<OrgEditor
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             fragment.requireActivity().getMenuInflater().inflate(R.menu.member_edit, menu);
+            if(getMemberSelected().hasUnderlings()) {
+                menu.findItem(R.id.editTeam).setTitle("remove team");
+            }
+            else {
+                menu.findItem(R.id.editTeam).setTitle("attach team");
+            }
         }
     }
 
-    public void removeMember(int position)
+    public void removeMemberSelected()
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(fragment.requireActivity());
-        builder.setTitle("Do you want to delete this member?")
-                .setMessage("this will delete him and all of his teams (unless someone else is in charge of the team")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        team.getMembers().remove(position);
-                        notifyItemRemoved(position);
-                    }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        builder.create();
-        builder.show();
+        team.getMembers().remove(member_selected);
+        notifyItemRemoved(member_selected);
     }
 
     public Member getMember(int position)
@@ -98,9 +89,14 @@ public class OrgEditorRecyclerViewAdapter extends RecyclerView.Adapter<OrgEditor
         return team.getMembers().get(position);
     }
 
-    public void addTeamToMember(int position, Team team)
+    public void attachTeamToMemberSelected(Team team)
     {
-        this.team.getMembers().get(position).getTeams().add(team);
+        getMemberSelected().setUnderlings(team);
+    }
+
+    public void removeTeamFromMemberSelected()
+    {
+        getMemberSelected().setUnderlings(null);
     }
 
     public Member getMemberSelected()

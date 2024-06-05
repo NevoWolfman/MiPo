@@ -8,25 +8,24 @@ public class Member {
     private int id;
     private String Name;
 
-    //the team the member is in
+    //the team the member is a part of
     private Team team;
 
     //the teams that the member is in charge of
-    //empty if he isn't in charge of any teams
-    private List<Team> teams;
+    //null if he isn't in charge of any teams
+    private Team underlings;
 
     public Member(int id, String name, Team team) {
         this.id = id;
         Name = name;
         this.team = team;
-        teams = new LinkedList<>();
     }
 
-    public Member(int id, String name, Team team, List<Team> teams) {
+    public Member(int id, String name, Team team, Team underlings) {
         this.id = id;
         Name = name;
         this.team = team;
-        this.teams = teams;
+        this.underlings = underlings;
     }
 
     public int getId() {
@@ -53,16 +52,15 @@ public class Member {
         this.team = team;
     }
 
-    public List<Team> getTeams() {
-        return teams;
+    public Team getUnderlings() {
+        return underlings;
     }
 
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
+    public void setUnderlings(Team underlings) {
+        this.underlings = underlings;
     }
-
-    public boolean hasTeams() {
-        return !teams.isEmpty();
+    public boolean hasUnderlings() {
+        return underlings != null;
     }
 
     @Override

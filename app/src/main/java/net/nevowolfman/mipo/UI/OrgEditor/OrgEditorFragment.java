@@ -1,5 +1,7 @@
 package net.nevowolfman.mipo.UI.OrgEditor;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,7 +37,7 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
 
     //dialogs and stuff
     private AddMemberDialog addMemberDialog;
-    private AddTeamDialog addTeamDialog;
+        private AddTeamDialog addTeamDialog;
 
     //data
     private Organization org;
@@ -133,61 +135,51 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
         OrgEditorRecyclerViewAdapter adapter = (OrgEditorRecyclerViewAdapter) recyclerView.getAdapter();
         int id = item.getItemId();
         if (id == R.id.deleteMember) {
-            adapter.removeMember(adapter.member_selected);
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
+            builder.setTitle("Are you sure you want to delete this member?")
+                    .setMessage("this will delete him and all teams under him (unless someone else is in charge of the team")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            adapter.removeMemberSelected();
+                        }
+                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+            builder.create();
+            builder.show();
             return true;
         }
-        PopupMenu team_menu = new PopupMenu(requireContext(), recyclerView.findViewHolderForLayoutPosition(adapter.member_selected).itemView);
+        else if(id == R.id.switchTeam){
+            prevTeams.push(current_team);
+            switchCurrent_team(adapter.getMemberSelected().getUnderlings());
+        }
+        else if (id == R.id.editTeam) {
+            if(adapter.getMemberSelected().hasUnderlings()) {
+                //remove team
+                adapter.removeTeamFromMemberSelected();
+            }
+            else {
+                //attach team
+                PopupMenu team_menu = new PopupMenu(requireContext(), recyclerView.findViewHolderForLayoutPosition(adapter.member_selected).itemView);
+                team_menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        adapter.attachTeamToMemberSelected(getTeam(item.getTitle().toString()));
+                        return true;
+                    }
+                });
 
-        if(id == R.id.switchTeam){
-            team_menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    Team team = getTeam(item.getTitle().toString());
-                    prevTeams.push(current_team);
-                    switchCurrent_team(team);
-                    return true;
+                //add all of the teams to the menu
+                for (int i = 0, n = allTeams.size(); i < n; i++) {
+                    team_menu.getMenu().add(getAllTeams().get(i).getName());
                 }
-            });
-            Member member = adapter.getMemberSelected();
-            for (int i = 0, n = member.getTeams().size(); i < n; i++) {
-                Team team = member.getTeams().get(i);
-                team_menu.getMenu().add(team.getName());
+
+                team_menu.show();
             }
-            team_menu.show();
-        }
-        else if (id == R.id.attachTeam) {
-            team_menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    Team team = getTeam(item.getTitle().toString());
-                    adapter.addTeamToMember(adapter.member_selected, team);
-                    return true;
-                }
-            });
-            for (int i = 0, n = allTeams.size(); i < n; i++) {
-                Team team = getAllTeams().get(i);
-                if(!adapter.getMemberSelected().getTeams().contains(team)){
-                    team_menu.getMenu().add(team.getName());
-                }
-            }
-            team_menu.show();
-        }
-        else if (id == R.id.removeTeams) {
-            team_menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    String name = item.getTitle().toString();
-                    Team team = getTeam(item.getTitle().toString());
-                    adapter.getMemberSelected().getTeams().remove(team);
-                    return true;
-                }
-            });
-            Member member = adapter.getMemberSelected();
-            for (int i = 0, n = member.getTeams().size(); i < n; i++) {
-                Team team = member.getTeams().get(i);
-                team_menu.getMenu().add(team.getName());
-            }
-            team_menu.show();
         }
         else {
             return super.onContextItemSelected(item);
@@ -202,17 +194,6 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
     }
 
     //getters and setters
-    public MainActivity getParent() {
-        return parent;
-    }
-
-    public void setParent(MainActivity parent) {
-        this.parent = parent;
-    }
-
-    public Organization getOrg() {
-        return org;
-    }
 
     public Team getCurrent_team() {
         return current_team;
@@ -220,9 +201,5 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
 
     public List<Team> getAllTeams() {
         return allTeams;
-    }
-
-    public void setAllTeams(List<Team> allTeams) {
-        this.allTeams = allTeams;
     }
 }

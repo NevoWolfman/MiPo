@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,8 +19,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 import net.nevowolfman.mipo.DB.SQLiteHelper;
 import net.nevowolfman.mipo.Model.Organization;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 //an interface that handles the connection between the app and it's database
 public class Repository {
@@ -29,6 +33,7 @@ public class Repository {
     private FirebaseFirestore db;
 
     final String ORGS_COLLECTION = "orgs";
+    final String VERSION_COLLECTION = "versions";
 
     public Repository(Context context) {
         this.sqLiteHelper = new SQLiteHelper(context);
@@ -54,42 +59,30 @@ public class Repository {
     }
 
 
+
+
     public void addOrg(Organization org){
-        db.collection(ORGS_COLLECTION).document(org.getName()).set(org);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        db.collection(ORGS_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(VERSION_COLLECTION).document(sdf.format(Calendar.getInstance().getTime())).set(org);
     }
 
-    public void getOrg(String name, GetOrgListener listener) {
-        DocumentReference docRef = db.collection(ORGS_COLLECTION).document(name);
+    public void getOrg(GetOrgListener listener) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        DocumentReference docRef = db.collection(ORGS_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(VERSION_COLLECTION).document(sdf.format(Calendar.getInstance().getTime()));
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                listener.onComplete(documentSnapshot.toObject(Organization.class));
+                if(documentSnapshot.exists()) {
+                    listener.onComplete(documentSnapshot.toObject(Organization.class));
+                }
+                else {
+                    listener.onComplete(null);
+                }
             }
         });
     }
 
-    interface GetOrgListener {
+    public interface GetOrgListener {
         public void onComplete(Organization org);
-    }
-
-    public void getAllOrgs(GetAllOrgsListener listener) {
-        db.collection(ORGS_COLLECTION)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        List<Organization> list = new LinkedList<>();
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                list.add(document.toObject(Organization.class));
-                            }
-                            listener.onComplete(list);
-                        }
-                    }
-                });
-    }
-
-    public interface GetAllOrgsListener {
-        public void onComplete(List<Organization> orgs);
     }
 }
