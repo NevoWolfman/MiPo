@@ -22,6 +22,7 @@ import net.nevowolfman.mipo.Model.Organization;
 import net.nevowolfman.mipo.Model.Team;
 import net.nevowolfman.mipo.R;
 import net.nevowolfman.mipo.UI.Main.MainActivity;
+import net.nevowolfman.mipo.UI.Main.OrgFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
 
     //dialogs and stuff
     private AddMemberDialog addMemberDialog;
-        private AddTeamDialog addTeamDialog;
+    private AddTeamDialog addTeamDialog;
 
     //data
     private Organization org;
@@ -56,6 +57,8 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
         current_team = org.getAdmins();
         allTeams = new ArrayList<>();
         prevTeams = new Stack<>();
+
+        fillAllTeams(current_team);
 
         ((TextView)v.findViewById(R.id.tvOrgName)).setText(org.getName());
         tvTeamName = v.findViewById(R.id.tvTeamName);
@@ -93,9 +96,23 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
             if(!prevTeams.isEmpty()) {
                 switchCurrent_team(prevTeams.pop());
             }
+            else {
+                parent.swapFragments(R.id.fragOrgEditor, new OrgFragment());
+            }
         }
         else if(view == save) {
+            parent.addOrg(org);
+            parent.swapFragments(R.id.fragOrgEditor, new OrgFragment());
+        }
+    }
 
+    public void fillAllTeams(Team team) {
+        for (int i = 0; i < team.getMembers().size(); i++) {
+            Team newTeam = team.getMembers().get(i).getUnderlings();
+            if(newTeam != null && !allTeams.contains(newTeam)) {
+                allTeams.add(newTeam);
+                fillAllTeams(team);
+            }
         }
     }
 
@@ -154,8 +171,10 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
             return true;
         }
         else if(id == R.id.switchTeam){
-            prevTeams.push(current_team);
-            switchCurrent_team(adapter.getMemberSelected().getUnderlings());
+            if(adapter.getMemberSelected().hasUnderlings()) {
+                prevTeams.push(current_team);
+                switchCurrent_team(adapter.getMemberSelected().getUnderlings());
+            }
         }
         else if (id == R.id.editTeam) {
             if(adapter.getMemberSelected().hasUnderlings()) {

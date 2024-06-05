@@ -3,43 +3,68 @@ package net.nevowolfman.mipo.UI.Main;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
+import net.nevowolfman.mipo.Model.Organization;
 import net.nevowolfman.mipo.R;
+import net.nevowolfman.mipo.Repository.Repository;
+import net.nevowolfman.mipo.UI.OrgEditor.OrgEditorFragment;
 
+public class OrgFragment extends Fragment implements View.OnClickListener {
 
-public class OrgFragment extends Fragment {
     private MainActivity parent;
-    private RecyclerView list;
-    private Button btnNewOrg;
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        parent = (MainActivity)requireActivity();
-        View view = inflater.inflate(R.layout.fragment_org_list, container, false);
+    private Button check, edit;
 
-        btnNewOrg = view.findViewById(R.id.btnNewOrg);
-        btnNewOrg.setOnClickListener(new View.OnClickListener() {
+    private AddOrganizationDialog addOrganizationDialog;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view =  inflater.inflate(R.layout.fragment_org, container, false);
+
+        parent = (MainActivity)requireActivity();
+
+        check = view.findViewById(R.id.btnCheck);
+        edit = view.findViewById(R.id.btnEdit);
+
+        parent.getRepository().getOrg(new Repository.GetOrgListener() {
             @Override
-            public void onClick(View view) {
-                parent.showAddOrgDialog();
+            public void onComplete(Organization org) {
+                if(org == null) {
+                    ((ViewGroup)view).removeView(check);
+                    edit.setText("Create a New Organization");
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)edit.getLayoutParams();
+                    params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+                    edit.setLayoutParams(params);
+                    edit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            addOrganizationDialog = new AddOrganizationDialog(parent);
+                            addOrganizationDialog.show(getParentFragmentManager(), "addOrg");
+                        }
+                    });
+                }
+                else {
+                    check.setOnClickListener(OrgFragment.this);
+                    edit.setOnClickListener(OrgFragment.this);
+                }
             }
         });
-
-        list = view.findViewById(R.id.list);
-        list.setLayoutManager(new LinearLayoutManager(parent));
-        list.setAdapter(new OrgRecyclerViewAdapter(parent.getAllOrgs()));
 
         return view;
     }
 
-    public void notifyItemAdded()
-    {
-        list.getAdapter().notifyItemInserted(list.getAdapter().getItemCount() - 1);
+    @Override
+    public void onClick(View view) {
+        if(view == check) {
+            //TODO: implement this
+        }
+        else if (view == edit) {
+            parent.swapFragments(R.id.fragOrg, new OrgEditorFragment());
+        }
     }
 }

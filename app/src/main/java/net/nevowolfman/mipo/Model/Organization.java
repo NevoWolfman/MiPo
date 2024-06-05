@@ -15,6 +15,11 @@ public class Organization {
         this.admins = new Team("admins");
     }
 
+    public Organization() {
+        Name = "";
+        this.admins = new Team();
+    }
+
     public String getName() {
         return Name;
     }

@@ -49,6 +49,8 @@ public class ProfileFragment extends Fragment {
         tvEmail = root.findViewById(R.id.tvEmail);
         btnSignOut = root.findViewById(R.id.btnSignOut);
 
+        tvEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+
         prefs = parent.getSharedPreferences(SAVED_CREDENTIALS, Activity.MODE_PRIVATE);
 
         btnSignOut.setOnClickListener(new View.OnClickListener() {

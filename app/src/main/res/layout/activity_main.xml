@@ -16,7 +16,6 @@
         android:layout_marginTop="20dp"
         />
 
-    <!-- TODO: customize UI and stuff -->
     <androidx.viewpager2.widget.ViewPager2
         android:layout_marginTop="25dp"
         android:layout_marginBottom="25dp"

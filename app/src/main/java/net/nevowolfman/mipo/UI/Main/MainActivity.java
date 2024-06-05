@@ -2,6 +2,7 @@ package net.nevowolfman.mipo.UI.Main;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -17,8 +18,6 @@ import android.widget.Toast;
 import net.nevowolfman.mipo.Model.Organization;
 import net.nevowolfman.mipo.R;
 import net.nevowolfman.mipo.Repository.Repository;
-import net.nevowolfman.mipo.Repository.UserModel;
-import net.nevowolfman.mipo.UI.Login.LoginActivity;
 import net.nevowolfman.mipo.UI.OrgEditor.OrgEditorFragment;
 
 import com.firebase.ui.auth.AuthUI;
@@ -28,7 +27,6 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,14 +36,11 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private BottomNavigationView navbar;
 
-    private OrgFragment orgFragment;
+    private Fragment currentOrgFragment;
     private OrgEditorFragment orgEditorFragment;
     private ProfileFragment profileFragment;
-    private AddOrganizationDialog addOrganizationDialog;
 
     private Repository repository;
-
-    private List<Organization> allOrgs;
     private Organization org;
 
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
@@ -71,14 +66,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         repository = new Repository(this);
-        allOrgs = new ArrayList<>();
-        org = new Organization("org");
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            startSignIn();
+        }
+
         repository.getOrg(new Repository.GetOrgListener() {
             @Override
             public void onComplete(Organization _org) {
-                if(_org != null) {
-                    org = _org;
-                }
+                org = _org;
             }
         });
 
@@ -88,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pager_adapter);
         navbar = findViewById(R.id.navbar);
 
-        orgFragment = new OrgFragment();
+        currentOrgFragment = new OrgFragment();
         orgEditorFragment = new OrgEditorFragment();
         profileFragment = new ProfileFragment();
 
@@ -117,23 +113,20 @@ public class MainActivity extends AppCompatActivity {
                 navbar.getMenu().getItem(position).setChecked(true);
             }
         });
-
-        startSignIn();
-    }
-
-    public void showAddOrgDialog(){
-        addOrganizationDialog = new AddOrganizationDialog(this);
-        addOrganizationDialog.show(getSupportFragmentManager(), "addOrg");
     }
 
     public void addOrg(Organization org){
-        if(!allOrgs.contains(org)){
-            allOrgs.add(org);
-            orgFragment.notifyItemAdded();
-        }
-        repository.addOrg(org);
+        repository.setOrg(org);
         this.org = org;
     }
+
+    public void swapFragments(@IdRes int oldFragmentID, Fragment newFragment) {
+        currentOrgFragment = newFragment;
+        viewPager.setAdapter(new ScreenSlidePagerAdapter(this));
+        viewPager.setCurrentItem(1);
+        //getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(oldFragmentID, newFragment).commit();
+    }
+
 
 
     private class ScreenSlidePagerAdapter extends FragmentStateAdapter {
@@ -146,13 +139,11 @@ public class MainActivity extends AppCompatActivity {
         public Fragment createFragment(int position) {
             if(position == 0)
             {
-
                 return profileFragment;
             }
             if(position == 1)
             {
-
-                return orgEditorFragment;
+                return currentOrgFragment;
             }
             return null;
         }
@@ -184,23 +175,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //get & set //////////////////////////////////////////////////////////////////////////////////
-    public List<Organization> getAllOrgs() {
-        return allOrgs;
-    }
-
-    public void setAllOrgs(List<Organization> allOrgs) {
-        this.allOrgs = allOrgs;
-    }
-
-    public Repository getRepository() {
-        return repository;
-    }
-
     public Organization getOrg() {
         return org;
     }
-
-    public void setOrg(Organization org) {
-        this.org = org;
+    public Repository getRepository() {
+        return repository;
+    }
+    public void setRepository(Repository repository) {
+        this.repository = repository;
     }
 }

@@ -8,25 +8,22 @@ public class Member {
     private int id;
     private String Name;
 
-    //the team the member is a part of
-    private Team team;
-
     //the teams that the member is in charge of
     //null if he isn't in charge of any teams
     private Team underlings;
 
-    public Member(int id, String name, Team team) {
+    public Member(int id, String name) {
         this.id = id;
         Name = name;
-        this.team = team;
     }
 
-    public Member(int id, String name, Team team, Team underlings) {
+    public Member(int id, String name, Team underlings) {
         this.id = id;
         Name = name;
-        this.team = team;
         this.underlings = underlings;
     }
+
+    public Member(){}
 
     public int getId() {
         return id;
@@ -44,14 +41,6 @@ public class Member {
         Name = name;
     }
 
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
     public Team getUnderlings() {
         return underlings;
     }
@@ -61,12 +50,5 @@ public class Member {
     }
     public boolean hasUnderlings() {
         return underlings != null;
-    }
-
-    @Override
-    public String toString() {
-        return  "id=" + id +
-                ", Name='" + Name + '\'' +
-                ", team=" + team.getName();
     }
 }

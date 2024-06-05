@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".UI.OrgEditor.OrgEditorFragment">
+    tools:context=".UI.OrgEditor.OrgEditorFragment"
+    android:id="@+id/fragOrgEditor">
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,6 +61,8 @@
         android:text="Create Team"
         android:textSize="20sp"
         />
+
+    <!--TODO: add option to delete teams -->
 
     <Button
         android:layout_width="wrap_content"

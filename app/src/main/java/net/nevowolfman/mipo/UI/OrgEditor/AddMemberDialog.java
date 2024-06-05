@@ -53,7 +53,7 @@ public class AddMemberDialog extends DialogFragment {
                                 Toast.makeText(requireContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            fragment.addMember(new Member(id, name, fragment.getCurrent_team()));
+                            fragment.addMember(new Member(id, name));
                         }
                     }
                 }).setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {

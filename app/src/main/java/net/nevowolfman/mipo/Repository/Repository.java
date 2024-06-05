@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,13 +28,13 @@ import java.util.Locale;
 
 //an interface that handles the connection between the app and it's database
 public class Repository {
-    //TODO: add a remote database such as MySQL or FireBase
     private SQLiteHelper sqLiteHelper;
 
     private FirebaseFirestore db;
 
     final String ORGS_COLLECTION = "orgs";
     final String VERSION_COLLECTION = "versions";
+    final String ORG_DOC = "org";
 
     public Repository(Context context) {
         this.sqLiteHelper = new SQLiteHelper(context);
@@ -61,12 +62,31 @@ public class Repository {
 
 
 
-    public void addOrg(Organization org){
+    public void setOrg(Organization org){
+        db.collection(ORGS_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(VERSION_COLLECTION).document(ORG_DOC).set(org);
+    }
+
+    public void getOrg(GetOrgListener listener) {
+        DocumentReference docRef = db.collection(ORGS_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(VERSION_COLLECTION).document(ORG_DOC);
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()) {
+                    listener.onComplete(documentSnapshot.toObject(Organization.class));
+                }
+                else {
+                    listener.onComplete(null);
+                }
+            }
+        });
+    }
+
+    public void setCheckedOrg(Organization org){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         db.collection(ORGS_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(VERSION_COLLECTION).document(sdf.format(Calendar.getInstance().getTime())).set(org);
     }
 
-    public void getOrg(GetOrgListener listener) {
+    public void getCheckedOrg(GetOrgListener listener) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         DocumentReference docRef = db.collection(ORGS_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(VERSION_COLLECTION).document(sdf.format(Calendar.getInstance().getTime()));
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
