@@ -14,7 +14,7 @@
         android:theme="@style/Theme.ScoutsApp"
         tools:targetApi="31">
         <activity
-            android:name="net.nevowolfman.mipo.UI.OrgManager.OrgManagerActivity"
+            android:name="net.nevowolfman.mipo.UI.OrgEditor.OrgManagerActivity"
             android:exported="false" />
         <activity
             android:name="net.nevowolfman.mipo.UI.SignUp.SignUpActivity"

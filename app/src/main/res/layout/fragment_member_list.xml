@@ -9,5 +9,5 @@
     android:layout_centerHorizontal="true"
     android:layout_gravity="center"
     app:layoutManager="LinearLayoutManager"
-    tools:context="net.nevowolfman.mipo.UI.OrgManager.MemberFragment"
+    tools:context="net.nevowolfman.mipo.UI.OrgEditor.MemberFragment"
     tools:listitem="@layout/fragment_member" />

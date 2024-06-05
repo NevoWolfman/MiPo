@@ -1,7 +1,4 @@
-package net.nevowolfman.mipo.UI.OrgManager;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+package net.nevowolfman.mipo.UI.OrgEditor;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,31 +10,33 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import net.nevowolfman.mipo.Model.Member;
 import net.nevowolfman.mipo.Model.Team;
 import net.nevowolfman.mipo.R;
 
-public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRecyclerViewAdapter.ViewHolder> {
-    MemberFragment fragment;
+public class OrgEditorRecyclerViewAdapter extends RecyclerView.Adapter<OrgEditorRecyclerViewAdapter.ViewHolder> {
+
+    OrgEditorFragment fragment;
     Team team;
     int member_selected;
 
-    public MyMemberRecyclerViewAdapter(MemberFragment fragment, Team team) {
+    public OrgEditorRecyclerViewAdapter(OrgEditorFragment fragment, Team team) {
         this.fragment = fragment;
         this.team = team;
         member_selected = -1;
     }
 
-    @Override
     @NonNull
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rootView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_member, parent, false);
-        return new ViewHolder(rootView);
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_member, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.member = team.getMembers().get(position);
         holder.name.setText(holder.member.getName());
         holder.id.setText(String.valueOf(holder.member.getId()));
@@ -50,13 +49,11 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         public final TextView name, id;
-        public final CheckBox cbHasGoons;
         public Member member;
         public LinearLayout rootView;
-
-        public ViewHolder(View view) {
+        public ViewHolder(@NonNull View view) {
             super(view);
-            rootView = (LinearLayout) view;
+            rootView = (LinearLayout)view;
             view.setOnCreateContextMenuListener(this);
             view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
@@ -67,7 +64,6 @@ public class MyMemberRecyclerViewAdapter extends RecyclerView.Adapter<MyMemberRe
             });
             name = view.findViewById(R.id.MemberName);
             id = view.findViewById(R.id.MemberID);
-            cbHasGoons = view.findViewById(R.id.cbHasTeam);
         }
 
         @Override

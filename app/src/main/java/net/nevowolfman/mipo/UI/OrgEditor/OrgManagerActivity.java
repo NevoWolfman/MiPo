@@ -1,4 +1,4 @@
-package net.nevowolfman.mipo.UI.OrgManager;
+package net.nevowolfman.mipo.UI.OrgEditor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -45,17 +45,17 @@ public class OrgManagerActivity extends AppCompatActivity {
         return org;
     }
 
-    public void showAddMemberDialog()
-    {
-        addMemberDialog = new AddMemberDialog(this);
-        addMemberDialog.show(getSupportFragmentManager(), "addMember");
-    }
-
-    public void showAddTeamDialog()
-    {
-        addTeamDialog = new AddTeamDialog(this);
-        addTeamDialog.show(getSupportFragmentManager(), "addTeam");
-    }
+//    public void showAddMemberDialog()
+//    {
+//        addMemberDialog = new AddMemberDialog(this);
+//        addMemberDialog.show(getSupportFragmentManager(), "addMember");
+//    }
+//
+//    public void showAddTeamDialog()
+//    {
+//        addTeamDialog = new AddTeamDialog(this);
+//        addTeamDialog.show(getSupportFragmentManager(), "addTeam");
+//    }
 
     public void addMember(Member member)
     {

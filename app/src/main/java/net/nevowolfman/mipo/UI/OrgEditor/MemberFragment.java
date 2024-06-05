@@ -1,4 +1,4 @@
-package net.nevowolfman.mipo.UI.OrgManager;
+package net.nevowolfman.mipo.UI.OrgEditor;
 
 import android.content.Context;
 import android.os.Bundle;

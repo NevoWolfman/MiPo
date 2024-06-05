@@ -1,4 +1,4 @@
-package net.nevowolfman.mipo.UI.OrgManager;
+package net.nevowolfman.mipo.UI.OrgEditor;
 
 import android.os.Bundle;
 
@@ -29,7 +29,7 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
         addMember = v.findViewById(R.id.btnAddMember);
         createTeam = v.findViewById(R.id.btnCreateTeam);
-        back = v.findViewById(R.id.btnBack2);
+        back = v.findViewById(R.id.btnBack);
 
         addMember.setOnClickListener(this);
         createTeam.setOnClickListener(this);
@@ -40,14 +40,14 @@ public class ButtonsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if(view == addMember)
-        {
-            parent.showAddMemberDialog();
-
-        }
-        else if(view == createTeam)
-        {
-            parent.showAddTeamDialog();
-        }
+//        if(view == addMember)
+//        {
+//            parent.showAddMemberDialog();
+//
+//        }
+//        else if(view == createTeam)
+//        {
+//            parent.showAddTeamDialog();
+//        }
     }
 }

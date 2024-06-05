@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.nevowolfman.mipo.UI.OrgManager.OrgManagerActivity">
+    tools:context="net.nevowolfman.mipo.UI.OrgEditor.OrgManagerActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
         android:layout_below="@+id/tvTeamName"
         android:layout_marginTop="20dp"
         android:layout_above="@+id/Org_Create_Buttons"
-        class="net.nevowolfman.mipo.UI.OrgManager.MemberFragment"
+        class="net.nevowolfman.mipo.UI.OrgEditor.MemberFragment"
         />
 
     <fragment
@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="25dp"
-        class="net.nevowolfman.mipo.UI.OrgManager.ButtonsFragment"
+        class="net.nevowolfman.mipo.UI.OrgEditor.ButtonsFragment"
         />
 
 </RelativeLayout>

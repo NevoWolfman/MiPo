@@ -1,4 +1,4 @@
-package net.nevowolfman.mipo.UI.OrgManager;
+package net.nevowolfman.mipo.UI.OrgEditor;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -17,10 +17,10 @@ import net.nevowolfman.mipo.R;
 
 public class AddMemberDialog extends DialogFragment {
     EditText etID, etName;
-    OrgManagerActivity activity;
+    OrgEditorFragment fragment;
 
-    public AddMemberDialog(OrgManagerActivity activity){
-        this.activity = activity;
+    public AddMemberDialog(OrgEditorFragment fragment){
+        this.fragment = fragment;
     }
 
     @Override
@@ -43,17 +43,17 @@ public class AddMemberDialog extends DialogFragment {
 
                         if(name.isEmpty() || id_str.isEmpty())
                         {
-                            Toast.makeText(activity, "Please fill out", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(requireContext(), "Please fill out", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
                             try {
                                 id = Integer.parseInt(id_str);
                             }catch (NumberFormatException e){
-                                Toast.makeText(activity, "Invalid ID", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(requireContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            activity.addMember(new Member(id, name, activity.getCurrent_team()));
+                            fragment.addMember(new Member(id, name, fragment.getCurrent_team()));
                         }
                     }
                 }).setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {

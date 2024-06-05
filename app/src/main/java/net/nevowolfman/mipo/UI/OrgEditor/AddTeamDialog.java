@@ -1,4 +1,4 @@
-package net.nevowolfman.mipo.UI.OrgManager;
+package net.nevowolfman.mipo.UI.OrgEditor;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,13 +15,15 @@ import androidx.fragment.app.DialogFragment;
 import net.nevowolfman.mipo.Model.Team;
 import net.nevowolfman.mipo.R;
 
+import java.util.List;
+
 public class AddTeamDialog extends DialogFragment {
     EditText etName;
 
-    OrgManagerActivity activity;
+    OrgEditorFragment fragment;
 
-    public AddTeamDialog(OrgManagerActivity activity) {
-        this.activity = activity;
+    public AddTeamDialog(OrgEditorFragment fragment) {
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -37,18 +39,19 @@ public class AddTeamDialog extends DialogFragment {
                 String name = etName.getText().toString();
                 if(name.isEmpty())
                 {
-                    Toast.makeText(activity, "Please fill out", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Please fill out", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                for (int i = 0; i < activity.getAllTeams().size(); i++) {
-                    if(activity.getAllTeams().get(i).getName().equals(name))
+                List<Team> all = fragment.getAllTeams();
+                for (int i = 0; i < all.size(); i++) {
+                    if(all.get(i).getName().equals(name))
                     {
-                        Toast.makeText(activity, "Team already exists", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), "Team already exists", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
-                activity.addTeam(new Team(name));
+                fragment.addTeam(new Team(name));
             }
         }).setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
             @Override

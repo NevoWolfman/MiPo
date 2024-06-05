@@ -19,6 +19,7 @@ import net.nevowolfman.mipo.R;
 import net.nevowolfman.mipo.Repository.Repository;
 import net.nevowolfman.mipo.Repository.UserModel;
 import net.nevowolfman.mipo.UI.Login.LoginActivity;
+import net.nevowolfman.mipo.UI.OrgEditor.OrgEditorFragment;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
@@ -38,12 +39,14 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navbar;
 
     private OrgFragment orgFragment;
+    private OrgEditorFragment orgEditorFragment;
     private ProfileFragment profileFragment;
     private AddOrganizationDialog addOrganizationDialog;
 
     private Repository repository;
 
     private List<Organization> allOrgs;
+    private Organization org;
 
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         startSignIn();
                     }
                     else{
-                        profileFragment.setTVEmail((FirebaseAuth.getInstance().getCurrentUser().getEmail()));
+                        profileFragment.setTVEmail((FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
                     }
                 }
             }
@@ -67,12 +70,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        repository = new Repository(this);
+        allOrgs = new ArrayList<>();
+        org = new Organization("org");
+
         viewPager = findViewById(R.id.viewpager);
         ScreenSlidePagerAdapter pager_adapter = new ScreenSlidePagerAdapter(this);
         viewPager.setAdapter(pager_adapter);
         navbar = findViewById(R.id.navbar);
 
         orgFragment = new OrgFragment();
+        orgEditorFragment = new OrgEditorFragment();
         profileFragment = new ProfileFragment();
 
         navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -101,9 +109,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        repository = new Repository(this);
-        allOrgs = new ArrayList<>();
-
         startSignIn();
     }
 
@@ -112,24 +117,12 @@ public class MainActivity extends AppCompatActivity {
         addOrganizationDialog.show(getSupportFragmentManager(), "addOrg");
     }
 
-    public List<Organization> getAllOrgs() {
-        return allOrgs;
-    }
-
-    public void setAllOrgs(List<Organization> allOrgs) {
-        this.allOrgs = allOrgs;
-    }
-
     public void addOrg(Organization org){
         if(!allOrgs.contains(org)){
             allOrgs.add(org);
             orgFragment.notifyItemAdded();
             repository.addOrg(org);
         }
-    }
-
-    public Repository getRepository() {
-        return repository;
     }
 
 
@@ -149,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             if(position == 1)
             {
 
-                return orgFragment;
+                return orgEditorFragment;
             }
             return null;
         }
@@ -178,5 +171,26 @@ public class MainActivity extends AppCompatActivity {
                 .setAvailableProviders(providers)
                 .build();
         signInLauncher.launch(signInIntent);
+    }
+
+    //get & set //////////////////////////////////////////////////////////////////////////////////
+    public List<Organization> getAllOrgs() {
+        return allOrgs;
+    }
+
+    public void setAllOrgs(List<Organization> allOrgs) {
+        this.allOrgs = allOrgs;
+    }
+
+    public Repository getRepository() {
+        return repository;
+    }
+
+    public Organization getOrg() {
+        return org;
+    }
+
+    public void setOrg(Organization org) {
+        this.org = org;
     }
 }
