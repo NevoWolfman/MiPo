@@ -23,6 +23,7 @@ import net.nevowolfman.mipo.UI.Main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class OrgEditorFragment extends Fragment implements View.OnClickListener {
     private MainActivity parent;
@@ -40,6 +41,7 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
     private Organization org;
     public Team current_team;
     private List<Team> allTeams;
+    private Stack<Team> prevTeams;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
         org = parent.getOrg();
         current_team = org.getAdmins();
         allTeams = new ArrayList<>();
+        prevTeams = new Stack<>();
 
         ((TextView)v.findViewById(R.id.tvOrgName)).setText(org.getName());
         tvTeamName = v.findViewById(R.id.tvTeamName);
@@ -85,7 +88,9 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
             addTeamDialog.show(getParentFragmentManager(), "addTeam");
         }
         else if (view == back) {
-
+            if(!prevTeams.isEmpty()) {
+                switchCurrent_team(prevTeams.pop());
+            }
         }
         else if(view == save) {
 
@@ -138,9 +143,8 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     Team team = getTeam(item.getTitle().toString());
-                    current_team = team;
-                    tvTeamName.setText(team.getName());
-                    recyclerView.setAdapter(new OrgEditorRecyclerViewAdapter(OrgEditorFragment.this, current_team));
+                    prevTeams.push(current_team);
+                    switchCurrent_team(team);
                     return true;
                 }
             });
@@ -191,6 +195,12 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
         return true;
     }
 
+    public void switchCurrent_team(Team team) {
+        current_team = team;
+        tvTeamName.setText(team.getName());
+        recyclerView.setAdapter(new OrgEditorRecyclerViewAdapter(OrgEditorFragment.this, current_team));
+    }
+
     //getters and setters
     public MainActivity getParent() {
         return parent;
@@ -206,10 +216,6 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
 
     public Team getCurrent_team() {
         return current_team;
-    }
-
-    public void setCurrent_team(Team current_team) {
-        this.current_team = current_team;
     }
 
     public List<Team> getAllTeams() {
