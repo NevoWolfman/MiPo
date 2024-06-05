@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new ScreenSlidePagerAdapter(this));
+        ScreenSlidePagerAdapter pager_adapter = new ScreenSlidePagerAdapter(this);
+        viewPager.setAdapter(pager_adapter);
         navbar = findViewById(R.id.navbar);
 
         orgFragment = new OrgFragment();
@@ -89,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
+            }
+        });
+
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                navbar.getMenu().getItem(position).setChecked(true);
             }
         });
 
