@@ -34,7 +34,7 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
     //views
     private TextView tvTeamName;
     private RecyclerView recyclerView;
-    Button addMember, createTeam, back, save;
+    private Button addMember, createTeam, back, save;
 
     //dialogs and stuff
     private AddMemberDialog addMemberDialog;
@@ -97,12 +97,12 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
                 switchCurrent_team(prevTeams.pop());
             }
             else {
-                parent.swapFragments(R.id.fragOrgEditor, new OrgFragment());
+                parent.swapFragments(R.id.fragOrgChecker, new OrgFragment());
             }
         }
         else if(view == save) {
             parent.addOrg(org);
-            parent.swapFragments(R.id.fragOrgEditor, new OrgFragment());
+            parent.swapFragments(R.id.fragOrgChecker, new OrgFragment());
         }
     }
 
@@ -209,7 +209,7 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
     public void switchCurrent_team(Team team) {
         current_team = team;
         tvTeamName.setText(team.getName());
-        recyclerView.setAdapter(new OrgEditorRecyclerViewAdapter(OrgEditorFragment.this, current_team));
+        recyclerView.setAdapter(new OrgEditorRecyclerViewAdapter(this, current_team));
     }
 
     //getters and setters

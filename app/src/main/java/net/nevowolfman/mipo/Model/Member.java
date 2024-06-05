@@ -11,16 +11,19 @@ public class Member {
     //the teams that the member is in charge of
     //null if he isn't in charge of any teams
     private Team underlings;
+    private boolean came;
 
     public Member(int id, String name) {
         this.id = id;
         Name = name;
+        came = false;
     }
 
     public Member(int id, String name, Team underlings) {
         this.id = id;
         Name = name;
         this.underlings = underlings;
+        came = false;
     }
 
     public Member(){}
@@ -50,5 +53,13 @@ public class Member {
     }
     public boolean hasUnderlings() {
         return underlings != null;
+    }
+
+    public boolean isCame() {
+        return came;
+    }
+
+    public void setCame(boolean came) {
+        this.came = came;
     }
 }

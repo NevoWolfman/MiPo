@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView navbar;
 
     private Fragment currentOrgFragment;
-    private OrgEditorFragment orgEditorFragment;
     private ProfileFragment profileFragment;
+    //TODO: add a fragment to show all of the data from all dates
 
     private Repository repository;
     private Organization org;
@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         navbar = findViewById(R.id.navbar);
 
         currentOrgFragment = new OrgFragment();
-        orgEditorFragment = new OrgEditorFragment();
         profileFragment = new ProfileFragment();
 
         navbar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

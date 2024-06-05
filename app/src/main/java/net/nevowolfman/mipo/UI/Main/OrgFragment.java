@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import net.nevowolfman.mipo.Model.Organization;
 import net.nevowolfman.mipo.R;
 import net.nevowolfman.mipo.Repository.Repository;
+import net.nevowolfman.mipo.UI.OrgChecker.OrgCheckerFragment;
 import net.nevowolfman.mipo.UI.OrgEditor.OrgEditorFragment;
 
 public class OrgFragment extends Fragment implements View.OnClickListener {
@@ -61,7 +62,7 @@ public class OrgFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if(view == check) {
-            //TODO: implement this
+            parent.swapFragments(R.id.fragOrg, new OrgCheckerFragment());
         }
         else if (view == edit) {
             parent.swapFragments(R.id.fragOrg, new OrgEditorFragment());

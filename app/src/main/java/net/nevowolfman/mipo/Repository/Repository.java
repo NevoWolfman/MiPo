@@ -36,7 +36,8 @@ public class Repository {
     }
 
     public void setOrg(Organization org){
-        db.collection(ORGS_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(VERSION_COLLECTION).document(ORG_DOC).set(org);
+        DocumentReference docRef =  db.collection(ORGS_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(VERSION_COLLECTION).document(ORG_DOC);
+        docRef.set(org);
     }
 
     public void getOrg(GetOrgListener listener) {
@@ -56,7 +57,8 @@ public class Repository {
 
     public void setCheckedOrg(Organization org){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        db.collection(ORGS_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(VERSION_COLLECTION).document(sdf.format(Calendar.getInstance().getTime())).set(org);
+        DocumentReference docRef = db.collection(ORGS_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(VERSION_COLLECTION).document(sdf.format(Calendar.getInstance().getTime()));
+        docRef.set(org);
     }
 
     public void getCheckedOrg(GetOrgListener listener) {
