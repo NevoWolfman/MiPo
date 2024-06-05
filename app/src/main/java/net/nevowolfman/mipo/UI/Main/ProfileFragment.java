@@ -24,8 +24,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import net.nevowolfman.mipo.R;
-import net.nevowolfman.mipo.Repository.UserModel;
-import net.nevowolfman.mipo.UI.Login.LoginActivity;
 
 public class ProfileFragment extends Fragment {
     private TextView tvEmail;
@@ -33,8 +31,6 @@ public class ProfileFragment extends Fragment {
 
     private MainActivity parent;
 
-    private SharedPreferences prefs;
-    public final String SAVED_CREDENTIALS = "credentials";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,16 +47,9 @@ public class ProfileFragment extends Fragment {
 
         tvEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
-        prefs = parent.getSharedPreferences(SAVED_CREDENTIALS, Activity.MODE_PRIVATE);
-
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.remove("email");
-                editor.remove("pass");
-                editor.apply();
-
                 AuthUI.getInstance()
                         .signOut(requireContext())
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -71,18 +60,6 @@ public class ProfileFragment extends Fragment {
                         });
             }
         });
-
-
-
-//        String email = parent.getIntent().getStringExtra("email");
-//        if(email != null)
-//        {
-//            UserModel user = parent.getRepository().getUserByEmail(email);
-//            if(user != null)
-//            {
-//                tvEmail.setText(email);
-//            }
-//        }
         return root;
     }
 
