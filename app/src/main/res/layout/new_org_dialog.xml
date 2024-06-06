@@ -26,5 +26,71 @@
         android:textSize="20sp"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDate1"
+        android:layout_below="@id/etName"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        android:text="First Event Date:"
+        android:layout_marginTop="10dp"
+        android:textSize="17sp"
+        />
+
+    <Spinner
+        android:id="@+id/spDay1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDate1"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        />
+
+    <Button
+        android:id="@+id/btnPick1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/tvDate1"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:text="Pick the Time"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDate2"
+        android:layout_below="@id/btnPick1"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        android:text="Second Event Date (Optional):"
+        android:layout_marginTop="10dp"
+        android:textSize="17sp"
+        />
+
+    <Spinner
+        android:id="@+id/spDay2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDate2"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        />
+
+    <Button
+        android:id="@+id/btnPick2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/tvDate2"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:text="Pick the Time"
+        />
+
 
 </RelativeLayout>

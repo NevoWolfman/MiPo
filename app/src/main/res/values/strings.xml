@@ -3,4 +3,13 @@
     <string name="Add">Add</string>
     <string name="Cancel">Cancel</string>
     <string name="sample">Sample</string>
+    <string-array name="week_array">
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+    </string-array>
 </resources>

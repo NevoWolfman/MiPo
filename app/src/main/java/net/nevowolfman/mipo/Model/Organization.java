@@ -1,23 +1,31 @@
 package net.nevowolfman.mipo.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //represents an Organization
 public class Organization {
     private String Name;
     private Team admins;
-
-    public Organization(String name, Team admins) {
-        Name = name;
-        this.admins = admins;
-    }
+    private List<EventDate> eventDates;
 
     public Organization(String name) {
         Name = name;
         this.admins = new Team("admins");
+        eventDates = new ArrayList<>();
+    }
+
+    public Organization(String name, EventDate event1) {
+        Name = name;
+        this.admins = new Team("admins");
+        eventDates = new ArrayList<>();
+        eventDates.add(0, event1);
     }
 
     public Organization() {
         Name = "";
         this.admins = new Team();
+        eventDates = new ArrayList<>();
     }
 
     public String getName() {
@@ -34,5 +42,13 @@ public class Organization {
 
     public void setAdmins(Team admins) {
         this.admins = admins;
+    }
+
+    public List<EventDate> getEventDates() {
+        return eventDates;
+    }
+
+    public void setEventDates(List<EventDate> eventDates) {
+        this.eventDates = eventDates;
     }
 }

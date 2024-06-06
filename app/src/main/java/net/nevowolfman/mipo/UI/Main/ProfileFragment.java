@@ -40,6 +40,8 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root =  inflater.inflate(R.layout.fragment_profile, container, false);
 
+        //TODO: add an option to edit member values and org values
+
         parent = (MainActivity)requireActivity();
 
         tvEmail = root.findViewById(R.id.tvEmail);
@@ -54,6 +56,10 @@ public class ProfileFragment extends Fragment {
                         .signOut(requireContext())
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             public void onComplete(@NonNull Task<Void> task) {
+                                try {
+                                    OrgFragment orgFragment = (OrgFragment) getParentFragmentManager().findFragmentById(R.id.fragOrg);
+                                    orgFragment.checkOrgMode();
+                                }catch (NullPointerException e) {}
                                 Toast.makeText(parent, "Signed Out", Toast.LENGTH_SHORT).show();
                                 ((MainActivity)requireActivity()).startSignIn();
                             }

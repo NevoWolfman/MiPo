@@ -19,7 +19,10 @@ import net.nevowolfman.mipo.UI.OrgEditor.OrgEditorFragment;
 public class OrgFragment extends Fragment implements View.OnClickListener {
 
     private MainActivity parent;
+
+    private RelativeLayout layout;
     private Button check, edit;
+
 
     private AddOrganizationDialog addOrganizationDialog;
     @Override
@@ -32,11 +35,29 @@ public class OrgFragment extends Fragment implements View.OnClickListener {
         check = view.findViewById(R.id.btnCheck);
         edit = view.findViewById(R.id.btnEdit);
 
+        checkOrgMode();
+
+        layout = (RelativeLayout) view;
+
+        return view;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == check) {
+            parent.swapFragments(R.id.fragOrg, new OrgCheckerFragment());
+        }
+        else if (view == edit) {
+            parent.swapFragments(R.id.fragOrg, new OrgEditorFragment());
+        }
+    }
+
+    public void checkOrgMode() {
         parent.getRepository().getOrg(new Repository.GetOrgListener() {
             @Override
             public void onComplete(Organization org) {
                 if(org == null) {
-                    ((ViewGroup)view).removeView(check);
+                    layout.removeView(check);
                     edit.setText("Create a New Organization");
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)edit.getLayoutParams();
                     params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
@@ -55,17 +76,5 @@ public class OrgFragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
-
-        return view;
-    }
-
-    @Override
-    public void onClick(View view) {
-        if(view == check) {
-            parent.swapFragments(R.id.fragOrg, new OrgCheckerFragment());
-        }
-        else if (view == edit) {
-            parent.swapFragments(R.id.fragOrg, new OrgEditorFragment());
-        }
     }
 }
