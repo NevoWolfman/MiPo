@@ -10,7 +10,12 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TimePicker;
@@ -30,9 +35,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
@@ -42,9 +50,11 @@ public class MainActivity extends AppCompatActivity {
     private ProfileFragment profileFragment;
     //TODO: add a fragment to show all of the data from all dates
 
+    private AlarmManager alarmManager;
     private Repository repository;
     private Organization org;
 
+    /////////////////////////////////////////////////////// FireBaseAuthUI ///////////////////////////////////////////////////////
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
             new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
@@ -56,10 +66,37 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         profileFragment.setTVEmail((FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
+                        if(org != null) {
+                            ListIterator<EventDate> iterator = org.getEventDates().listIterator();
+                            while(iterator.hasNext()) {
+                                setAlarm(iterator.next());
+                            }
+                        }
                     }
                 }
             }
     );
+
+    public boolean onSignInResult(FirebaseAuthUIAuthenticationResult result) {
+        IdpResponse response = result.getIdpResponse();
+        if (response != null && result.getResultCode() == RESULT_OK) {
+            return true;
+        }
+        return false;
+    }
+
+    public void startSignIn(){
+        List<AuthUI.IdpConfig> providers = Arrays.asList(
+                new AuthUI.IdpConfig.EmailBuilder().build());
+        //new AuthUI.IdpConfig.GoogleBuilder().build()); does not work
+
+        Intent signInIntent = AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build();
+        signInLauncher.launch(signInIntent);
+    }
+    /////////////////////////////////////////////////////// FireBaseAuthUI ///////////////////////////////////////////////////////
 
 
     @Override
@@ -80,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         viewPager = findViewById(R.id.viewpager);
         ScreenSlidePagerAdapter pager_adapter = new ScreenSlidePagerAdapter(this);
@@ -116,19 +154,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void addOrg(Organization org){
-        repository.setOrg(org);
-        this.org = org;
-    }
-
+    /////////////////////////////////////////////////////// ViewPager2 ///////////////////////////////////////////////////////
     public void swapFragments(@IdRes int oldFragmentID, Fragment newFragment) {
         currentOrgFragment = newFragment;
         viewPager.setAdapter(new ScreenSlidePagerAdapter(this));
         viewPager.setCurrentItem(1);
         //getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(oldFragmentID, newFragment).commit();
     }
-
-
 
     private class ScreenSlidePagerAdapter extends FragmentStateAdapter {
         public ScreenSlidePagerAdapter(FragmentActivity activity) {
@@ -154,28 +186,47 @@ public class MainActivity extends AppCompatActivity {
             return 2;
         }
     }
+    /////////////////////////////////////////////////////// ViewPager2 ///////////////////////////////////////////////////////
 
-    public boolean onSignInResult(FirebaseAuthUIAuthenticationResult result) {
-        IdpResponse response = result.getIdpResponse();
-        if (response != null && result.getResultCode() == RESULT_OK) {
-            return true;
+    /////////////////////////////////////////////////////// Alarms ///////////////////////////////////////////////////////
+
+    private final long week = 1000*60*60*24*7;
+    public void setAlarm(EventDate eventDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.DAY_OF_WEEK, eventDate.getDay());
+        calendar.set(Calendar.HOUR_OF_DAY, eventDate.getHour());
+        calendar.set(Calendar.MINUTE, eventDate.getMinute());
+        long alarmTime = calendar.getTimeInMillis();
+
+
+        if(alarmTime < System.currentTimeMillis()){
+            alarmTime += week;
         }
-        return false;
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("id", eventDate.hashCode());
+        PendingIntent alarmIntent =  PendingIntent.getBroadcast(this, eventDate.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE);
+
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
+        if(!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) || alarmManager.canScheduleExactAlarms()){
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime, alarmIntent);
+        }
     }
 
-    public void startSignIn(){
-        List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build());
-                //new AuthUI.IdpConfig.GoogleBuilder().build()); does not work
-
-        Intent signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(providers)
-                .build();
-        signInLauncher.launch(signInIntent);
+    public void cancelAlarm(EventDate eventDate) {
+        PendingIntent alarmIntent =  PendingIntent.getBroadcast(this, eventDate.hashCode(), new Intent(this, AlarmReceiver.class), PendingIntent.FLAG_IMMUTABLE);
+        alarmManager.cancel(alarmIntent);
     }
+
+
+    /////////////////////////////////////////////////////// Alarms ///////////////////////////////////////////////////////
 
     //get & set //////////////////////////////////////////////////////////////////////////////////
+    public void addOrg(Organization org){
+        repository.setOrg(org);
+        this.org = org;
+    }
     public Organization getOrg() {
         return org;
     }

@@ -47,8 +47,15 @@ public class AddOrganizationDialog extends DialogFragment implements View.OnClic
         btnPick1 = view.findViewById(R.id.btnPick1);
         btnPick2 = view.findViewById(R.id.btnPick2);
 
-        spDay1.setAdapter(new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, EventDate.DayOfTheWeek.toArray()));
-        spDay2.setAdapter(new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, EventDate.DayOfTheWeek.values()));
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                activity,
+                R.array.week_array,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spDay1.setAdapter(adapter);
+        spDay2.setAdapter(adapter);
 
         btnPick1.setOnClickListener(this);
         btnPick2.setOnClickListener(this);
@@ -56,14 +63,14 @@ public class AddOrganizationDialog extends DialogFragment implements View.OnClic
         spDay1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                event1.setDay((EventDate.DayOfTheWeek) adapterView.getItemAtPosition(i));
+                event1.setDay(i+1);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}});
         spDay2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                event2.setDay((EventDate.DayOfTheWeek) adapterView.getItemAtPosition(i));
+                event2.setDay(i+1);
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}});
@@ -79,18 +86,16 @@ public class AddOrganizationDialog extends DialogFragment implements View.OnClic
                     Toast.makeText(activity, "Please fill out name", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(event1.getDay() == EventDate.DayOfTheWeek.none) {
-                    Toast.makeText(activity, "Please fill out day of first event", Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 if(event1.getMinute() == 60) {
                     Toast.makeText(activity, "Please fill out time of first event", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 Organization org = new Organization(name, event1);
-                if(event2.getDay() != EventDate.DayOfTheWeek.none && event2.getMinute() != 60){
+                activity.setAlarm(event1);
+                if(event2.getMinute() != 60){
                     org.getEventDates().add(1, event2);
+                    activity.setAlarm(event2);
                 }
                 activity.addOrg(org);
                 activity.swapFragments(R.id.fragOrg, new OrgEditorFragment());
@@ -120,7 +125,7 @@ public class AddOrganizationDialog extends DialogFragment implements View.OnClic
                 eventDate.setHour(hour);
                 eventDate.setMinute(minute);
             }
-        }, eventDate.getHour(), eventDate.getMinute(), false);
+        }, eventDate.getHour(), eventDate.getMinute(), true);
         timePickerDialog.show();
     }
 }

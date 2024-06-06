@@ -23,7 +23,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import net.nevowolfman.mipo.Model.EventDate;
+import net.nevowolfman.mipo.Model.Organization;
 import net.nevowolfman.mipo.R;
+
+import java.util.List;
+import java.util.ListIterator;
 
 public class ProfileFragment extends Fragment {
     private TextView tvEmail;
@@ -60,6 +65,14 @@ public class ProfileFragment extends Fragment {
                                     OrgFragment orgFragment = (OrgFragment) getParentFragmentManager().findFragmentById(R.id.fragOrg);
                                     orgFragment.checkOrgMode();
                                 }catch (NullPointerException e) {}
+                                Organization org = parent.getOrg();
+                                if(org != null) {
+                                    ListIterator<EventDate> iterator = org.getEventDates().listIterator();
+                                    while(iterator.hasNext()) {
+                                        parent.cancelAlarm(iterator.next());
+                                    }
+                                }
+
                                 Toast.makeText(parent, "Signed Out", Toast.LENGTH_SHORT).show();
                                 ((MainActivity)requireActivity()).startSignIn();
                             }
