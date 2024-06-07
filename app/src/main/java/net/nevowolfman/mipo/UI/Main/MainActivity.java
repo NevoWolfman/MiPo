@@ -11,6 +11,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -118,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        createNotificationChannel("events", "Events Alarms");
 
         viewPager = findViewById(R.id.viewpager);
         ScreenSlidePagerAdapter pager_adapter = new ScreenSlidePagerAdapter(this);
@@ -205,7 +208,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(this, AlarmReceiver.class);
-        intent.putExtra("id", eventDate.hashCode());
+        intent.putExtra("requestCode", eventDate.hashCode());
+        intent.putExtra("alarmTime", alarmTime);
         PendingIntent alarmIntent =  PendingIntent.getBroadcast(this, eventDate.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE);
 
         //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
@@ -219,7 +223,14 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.cancel(alarmIntent);
     }
 
-
+    private void createNotificationChannel(String id, String name) {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is not in the Support Library.
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_DEFAULT);
+            getSystemService(NotificationManager.class).createNotificationChannel(channel);
+        }
+    }
     /////////////////////////////////////////////////////// Alarms ///////////////////////////////////////////////////////
 
     //get & set //////////////////////////////////////////////////////////////////////////////////

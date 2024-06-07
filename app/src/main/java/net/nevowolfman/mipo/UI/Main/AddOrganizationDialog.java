@@ -81,6 +81,8 @@ public class AddOrganizationDialog extends DialogFragment implements View.OnClic
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String name = etName.getText().toString();
+
+                //TODO: make the errors not pop out from the dialog
                 if(name.isEmpty())
                 {
                     Toast.makeText(activity, "Please fill out name", Toast.LENGTH_SHORT).show();
