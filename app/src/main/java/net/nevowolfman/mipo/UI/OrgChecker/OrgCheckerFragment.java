@@ -37,6 +37,11 @@ public class OrgCheckerFragment extends Fragment implements View.OnClickListener
     private Organization org;
     public Team current_team;
     private Stack<Team> prevTeams;
+
+    public OrgCheckerFragment(Organization org) {
+        this.org = org;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,35 +49,24 @@ public class OrgCheckerFragment extends Fragment implements View.OnClickListener
         View v = inflater.inflate(R.layout.fragment_org_checker, container, false);
 
         parent = (MainActivity) requireActivity();
-
-        Repository repository = parent.getRepository();
-        repository.getCheckedOrg(new Repository.GetOrgListener() {
-            @Override
-            public void onComplete(Organization _org) {
-                if(_org == null) {
-                    _org = parent.getOrg();
-                }
-                org = _org;
-                current_team = org.getAdmins();
-                prevTeams = new Stack<>();
-
-                ((TextView)v.findViewById(R.id.tvOrgName)).setText(org.getName());
-                tvTeamName.setText(org.getAdmins().getName());
-
-                recyclerView.setAdapter(new OrgCheckerRecyclerViewAdapter(OrgCheckerFragment.this, current_team));
-            }
-        });
+        current_team = org.getAdmins();
+        prevTeams = new Stack<>();
 
         tvTeamName = v.findViewById(R.id.tvTeamName);
 
         recyclerView = v.findViewById(R.id.list);
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         back = v.findViewById(R.id.btnBack);
         save = v.findViewById(R.id.btnSave);
 
         back.setOnClickListener(this);
         save.setOnClickListener(this);
+
+        ((TextView)v.findViewById(R.id.tvOrgName)).setText(org.getName());
+        tvTeamName.setText(org.getAdmins().getName());
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setAdapter(new OrgCheckerRecyclerViewAdapter(OrgCheckerFragment.this, current_team));
 
         return v;
     }

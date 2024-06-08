@@ -21,10 +21,11 @@ public class OrgFragment extends Fragment implements View.OnClickListener {
     private MainActivity parent;
 
     private RelativeLayout layout;
-    private Button check, edit;
+    private Button check, edit, record;
 
 
     private AddOrganizationDialog addOrganizationDialog;
+    private CheckOrgRecordDialog checkOrgRecordDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,7 +35,9 @@ public class OrgFragment extends Fragment implements View.OnClickListener {
 
         check = view.findViewById(R.id.btnCheck);
         edit = view.findViewById(R.id.btnEdit);
+        record = view.findViewById(R.id.btnRecord);
 
+        //NOTE: this is acting weird because of the delay with the DB. Maybe try to fix it?
         checkOrgMode();
 
         layout = (RelativeLayout) view;
@@ -45,10 +48,24 @@ public class OrgFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if(view == check) {
-            parent.swapFragments(R.id.fragOrg, new OrgCheckerFragment());
+            parent.getRepository().getCheckedOrg(new Repository.GetOrgListener() {
+                @Override
+                public void onComplete(Organization org) {
+                    parent.swapFragments(R.id.fragOrg, new OrgCheckerFragment(org));
+                }
+            });
         }
         else if (view == edit) {
-            parent.swapFragments(R.id.fragOrg, new OrgEditorFragment());
+            parent.getRepository().getCheckedOrg(new Repository.GetOrgListener() {
+                @Override
+                public void onComplete(Organization org) {
+                    parent.swapFragments(R.id.fragOrg, new OrgEditorFragment(org));
+                }
+            });
+        }
+        else if (view == record) {
+            checkOrgRecordDialog = new CheckOrgRecordDialog(parent);
+            checkOrgRecordDialog.show(getParentFragmentManager(), "checkRecord");
         }
     }
 
@@ -58,6 +75,7 @@ public class OrgFragment extends Fragment implements View.OnClickListener {
             public void onComplete(Organization org) {
                 if(org == null) {
                     layout.removeView(check);
+                    layout.removeView(record);
                     edit.setText("Create a New Organization");
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)edit.getLayoutParams();
                     params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
@@ -73,6 +91,7 @@ public class OrgFragment extends Fragment implements View.OnClickListener {
                 else {
                     check.setOnClickListener(OrgFragment.this);
                     edit.setOnClickListener(OrgFragment.this);
+                    record.setOnClickListener(OrgFragment.this);
                 }
             }
         });

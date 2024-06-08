@@ -60,27 +60,12 @@ public class AddOrganizationDialog extends DialogFragment implements View.OnClic
         btnPick1.setOnClickListener(this);
         btnPick2.setOnClickListener(this);
 
-        spDay1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                event1.setDay(i+1);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}});
-        spDay2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                event2.setDay(i+1);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}});
-
-
-
         builder.setView(view).setPositiveButton(R.string.Add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String name = etName.getText().toString();
+                event1.setDay(spDay1.getSelectedItemPosition()+1);
+                event2.setDay(spDay2.getSelectedItemPosition()+1);
 
                 //TODO: make the errors not pop out from the dialog
                 if(name.isEmpty())
@@ -100,7 +85,7 @@ public class AddOrganizationDialog extends DialogFragment implements View.OnClic
                     activity.setAlarm(event2);
                 }
                 activity.addOrg(org);
-                activity.swapFragments(R.id.fragOrg, new OrgEditorFragment());
+                activity.swapFragments(R.id.fragOrg, new OrgEditorFragment(org));
             }
         }).setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
             @Override

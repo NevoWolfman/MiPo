@@ -5,6 +5,7 @@ import java.util.List;
 
 //represents a member of a team
 public class Member {
+    //TODO: remove id, since it's stupid and redundant
     private int id;
     private String Name;
 

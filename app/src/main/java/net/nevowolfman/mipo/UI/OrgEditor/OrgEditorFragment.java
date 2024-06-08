@@ -46,6 +46,10 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
     private List<Team> allTeams;
     private Stack<Team> prevTeams;
 
+    public OrgEditorFragment(Organization org) {
+        this.org = org;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -53,7 +57,7 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
 
         parent = (MainActivity) requireActivity();
 
-        org = parent.getOrg();
+        //org = parent.getOrg();
         current_team = org.getAdmins();
         allTeams = new ArrayList<>();
         prevTeams = new Stack<>();

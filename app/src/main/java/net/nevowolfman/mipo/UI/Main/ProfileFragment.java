@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import net.nevowolfman.mipo.Model.EventDate;
 import net.nevowolfman.mipo.Model.Organization;
 import net.nevowolfman.mipo.R;
+import net.nevowolfman.mipo.Repository.Repository;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -57,6 +58,17 @@ public class ProfileFragment extends Fragment {
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                parent.getRepository().getOrg(new Repository.GetOrgListener() {
+                    @Override
+                    public void onComplete(Organization org) {
+                        if(org != null) {
+                            ListIterator<EventDate> iterator = org.getEventDates().listIterator();
+                            while(iterator.hasNext()) {
+                                parent.cancelAlarm(iterator.next());
+                            }
+                        }
+                    }
+                });
                 AuthUI.getInstance()
                         .signOut(requireContext())
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -65,14 +77,6 @@ public class ProfileFragment extends Fragment {
                                     OrgFragment orgFragment = (OrgFragment) getParentFragmentManager().findFragmentById(R.id.fragOrg);
                                     orgFragment.checkOrgMode();
                                 }catch (NullPointerException e) {}
-                                Organization org = parent.getOrg();
-                                if(org != null) {
-                                    ListIterator<EventDate> iterator = org.getEventDates().listIterator();
-                                    while(iterator.hasNext()) {
-                                        parent.cancelAlarm(iterator.next());
-                                    }
-                                }
-
                                 Toast.makeText(parent, "Signed Out", Toast.LENGTH_SHORT).show();
                                 ((MainActivity)requireActivity()).startSignIn();
                             }

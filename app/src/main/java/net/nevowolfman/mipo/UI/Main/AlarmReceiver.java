@@ -21,7 +21,6 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         System.out.println("IT'S TIME!");
-        Toast.makeText(context, "IT'S TIME!", Toast.LENGTH_SHORT).show();
 
         showNotification(context);
 
@@ -37,10 +36,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public void showNotification(Context context) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "events")
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setContentTitle("It's Time")
                 .setContentText("Check your organization")
                 .setContentIntent(PendingIntent.getActivity(context, 1, new Intent(context, MainActivity.class), PendingIntent.FLAG_IMMUTABLE))
+                .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, builder.build());

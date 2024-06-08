@@ -31,4 +31,17 @@
         android:text="Edit your Organization"
         />
 
+    <Button
+        android:id="@+id/btnRecord"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/btnEdit"
+        android:layout_marginTop="25dp"
+
+        android:textSize="20sp"
+        android:text="Check Organization Record"
+        />
+
 </RelativeLayout>
