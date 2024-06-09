@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Fragment currentOrgFragment;
     private ProfileFragment profileFragment;
-    //TODO: add a fragment to show all of the data from all dates
 
     private AlarmManager alarmManager;
     private Repository repository;
@@ -67,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         profileFragment.setTVEmail((FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
+                        ((OrgFragment)getSupportFragmentManager().findFragmentById(R.id.fragOrg)).checkOrgMode();
                         repository.getOrg(new Repository.GetOrgListener() {
                             @Override
                             public void onComplete(Organization org) {

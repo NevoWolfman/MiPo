@@ -39,7 +39,6 @@ public class OrgEditorRecyclerViewAdapter extends RecyclerView.Adapter<OrgEditor
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.member = team.getMembers().get(position);
         holder.name.setText(holder.member.getName());
-        holder.id.setText(String.valueOf(holder.member.getId()));
     }
 
     @Override
@@ -48,7 +47,7 @@ public class OrgEditorRecyclerViewAdapter extends RecyclerView.Adapter<OrgEditor
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
-        public final TextView name, id;
+        public final TextView name;
         public Member member;
         public LinearLayout rootView;
         public ViewHolder(@NonNull View view) {
@@ -63,7 +62,6 @@ public class OrgEditorRecyclerViewAdapter extends RecyclerView.Adapter<OrgEditor
                 }
             });
             name = view.findViewById(R.id.MemberName);
-            id = view.findViewById(R.id.MemberID);
         }
 
         @Override

@@ -35,7 +35,6 @@ public class OrgCheckerRecyclerViewAdapter extends RecyclerView.Adapter<OrgCheck
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.member = team.getMembers().get(position);
         holder.name.setText(holder.member.getName());
-        holder.id.setText(String.valueOf(holder.member.getId()));
         holder.cbCame.setChecked(holder.member.isCame());
     }
 
@@ -45,7 +44,7 @@ public class OrgCheckerRecyclerViewAdapter extends RecyclerView.Adapter<OrgCheck
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView name, id;
+        public final TextView name;
         public final CheckBox cbCame;
         public Member member;
         public LinearLayout rootView;
@@ -63,7 +62,6 @@ public class OrgCheckerRecyclerViewAdapter extends RecyclerView.Adapter<OrgCheck
                 }
             });
             name = view.findViewById(R.id.MemberName);
-            id = view.findViewById(R.id.MemberID);
             cbCame = view.findViewById(R.id.cbCame);
 
             cbCame.setClickable(true);//we want to use it now, it isn't decoration anymore

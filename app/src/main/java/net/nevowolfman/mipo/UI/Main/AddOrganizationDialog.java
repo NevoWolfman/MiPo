@@ -60,14 +60,30 @@ public class AddOrganizationDialog extends DialogFragment implements View.OnClic
         btnPick1.setOnClickListener(this);
         btnPick2.setOnClickListener(this);
 
-        builder.setView(view).setPositiveButton(R.string.Add, new DialogInterface.OnClickListener() {
+        builder.setView(view).setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                //close the dialog
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, activity.getText(R.string.Add), (DialogInterface.OnClickListener) null);
+
+        return dialog;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        AlertDialog dialog = (AlertDialog) getDialog();
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 String name = etName.getText().toString();
                 event1.setDay(spDay1.getSelectedItemPosition()+1);
                 event2.setDay(spDay2.getSelectedItemPosition()+1);
 
-                //TODO: make the errors not pop out from the dialog
                 if(name.isEmpty())
                 {
                     Toast.makeText(activity, "Please fill out name", Toast.LENGTH_SHORT).show();
@@ -86,15 +102,9 @@ public class AddOrganizationDialog extends DialogFragment implements View.OnClic
                 }
                 activity.addOrg(org);
                 activity.swapFragments(R.id.fragOrg, new OrgEditorFragment(org));
-            }
-        }).setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //close the dialog
+                dialog.dismiss();
             }
         });
-
-        return builder.create();
     }
 
     @Override

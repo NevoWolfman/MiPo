@@ -16,7 +16,7 @@ import net.nevowolfman.mipo.Model.Member;
 import net.nevowolfman.mipo.R;
 
 public class AddMemberDialog extends DialogFragment {
-    EditText etID, etName;
+    EditText etName;
     OrgEditorFragment fragment;
 
     public AddMemberDialog(OrgEditorFragment fragment){
@@ -30,7 +30,6 @@ public class AddMemberDialog extends DialogFragment {
         LayoutInflater inflater = getLayoutInflater();
 
         View mainView = inflater.inflate(R.layout.new_member_dialog,null);
-        etID = mainView.findViewById(R.id.etID);
         etName = mainView.findViewById(R.id.etName);
 
         builder.setView(mainView)
@@ -38,22 +37,14 @@ public class AddMemberDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String name = etName.getText().toString();
-                        String id_str = etID.getText().toString();
-                        int id;
 
-                        if(name.isEmpty() || id_str.isEmpty())
+                        if(name.isEmpty())
                         {
                             Toast.makeText(requireContext(), "Please fill out", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
-                            try {
-                                id = Integer.parseInt(id_str);
-                            }catch (NumberFormatException e){
-                                Toast.makeText(requireContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            fragment.addMember(new Member(id, name));
+                            fragment.addMember(new Member(name));
                         }
                     }
                 }).setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
