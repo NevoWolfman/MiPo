@@ -46,14 +46,10 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root =  inflater.inflate(R.layout.fragment_profile, container, false);
 
-        //TODO: add an option to edit member values and org values
-
         parent = (MainActivity)requireActivity();
 
         tvEmail = root.findViewById(R.id.tvEmail);
         btnSignOut = root.findViewById(R.id.btnSignOut);
-
-        tvEmail.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
 
         btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override

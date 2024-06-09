@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         profileFragment.setTVEmail((FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
-                        ((OrgFragment)getSupportFragmentManager().findFragmentById(R.id.fragOrg)).checkOrgMode();
+                        try {
+                            ((OrgFragment)getSupportFragmentManager().findFragmentById(R.id.fragOrg)).checkOrgMode();
+                        }catch (NullPointerException ignored) {}
                         repository.getOrg(new Repository.GetOrgListener() {
                             @Override
                             public void onComplete(Organization org) {

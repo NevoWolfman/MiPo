@@ -42,6 +42,8 @@ public class OrgFragment extends Fragment implements View.OnClickListener {
 
         layout = (RelativeLayout) view;
 
+        layout.removeAllViews();
+
         return view;
     }
 
@@ -74,12 +76,13 @@ public class OrgFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onComplete(Organization org) {
                 if(org == null) {
-                    layout.removeView(check);
-                    layout.removeView(record);
                     edit.setText("Create a New Organization");
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)edit.getLayoutParams();
                     params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
                     edit.setLayoutParams(params);
+
+                    layout.addView(edit);
+
                     edit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -89,6 +92,10 @@ public class OrgFragment extends Fragment implements View.OnClickListener {
                     });
                 }
                 else {
+                    layout.addView(check);
+                    layout.addView(edit);
+                    layout.addView(record);
+
                     check.setOnClickListener(OrgFragment.this);
                     edit.setOnClickListener(OrgFragment.this);
                     record.setOnClickListener(OrgFragment.this);

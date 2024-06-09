@@ -101,7 +101,17 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
                 switchCurrent_team(prevTeams.pop());
             }
             else {
-                parent.swapFragments(R.id.fragOrgChecker, new OrgFragment());
+                AlertDialog.Builder builder = new AlertDialog.Builder(parent);
+                builder.setTitle("Are You Sure?")
+                        .setMessage("Leaving without saving will delete any changes you made, and all teams not attached to members will be deleted")
+                        .setPositiveButton(R.string.Go_Back, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                parent.swapFragments(R.id.fragOrgChecker, new OrgFragment());
+                            }
+                        })
+                        .setNegativeButton(R.string.Cancel, null);
+                builder.create().show();
             }
         }
         else if(view == save) {
@@ -141,12 +151,10 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
         return null;
     }
 
-    public void notifyMemberInserted(int position)
-    {
+    public void notifyMemberInserted(int position) {
         try {
             recyclerView.getAdapter().notifyItemInserted(position);
-        }catch (NullPointerException e)
-        {
+        }catch (NullPointerException e) {
             recyclerView.getAdapter().notifyDataSetChanged();
         }
     }
@@ -157,22 +165,7 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
         int id = item.getItemId();
         if (id == R.id.deleteMember) {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-            builder.setTitle("Are you sure you want to delete this member?")
-                    .setMessage("this will delete him and all teams under him (unless someone else is in charge of the team")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            adapter.removeMemberSelected();
-                        }
-                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    });
-            builder.create();
-            builder.show();
-            return true;
+            adapter.removeMemberSelected();
         }
         else if(id == R.id.switchTeam){
             if(adapter.getMemberSelected().hasUnderlings()) {
@@ -197,8 +190,10 @@ public class OrgEditorFragment extends Fragment implements View.OnClickListener 
                 });
 
                 //add all of the teams to the menu
-                for (int i = 0, n = allTeams.size(); i < n; i++) {
-                    team_menu.getMenu().add(getAllTeams().get(i).getName());
+                for (Team team : allTeams) {
+                    if(!current_team.equals(team)) {
+                        team_menu.getMenu().add(team.getName());
+                    }
                 }
 
                 team_menu.show();

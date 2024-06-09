@@ -3,6 +3,7 @@
     <string name="Add">Add</string>
     <string name="Cancel">Cancel</string>
     <string name="Select">Select</string>
+    <string name="Go_Back">Go Back</string>
     <string name="sample">Sample</string>
     <string-array name="week_array">
         <item>Sunday</item>
