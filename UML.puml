@@ -1,0 +1,162 @@
+@startuml
+class OrgCheckerRecyclerViewAdapter {
+~ OrgCheckerFragment fragment
+~ Team team
+}
+
+class OrgCheckerRecyclerViewAdapter$ViewHolder {
++ TextView name
++ CheckBox cbCame
++ Member member
++ LinearLayout rootView
+}
+
+class Team {
+- String name
+- List<Member> members
+}
+
+class OrgEditorRecyclerViewAdapter {
+~ OrgEditorFragment fragment
+~ Team team
+~ int member_selected
+}
+
+class OrgEditorRecyclerViewAdapter$ViewHolder {
++ TextView name
++ Member member
++ LinearLayout rootView
+}
+
+class AddTeamDialog {
+~ EditText etName
+~ OrgEditorFragment fragment
+}
+
+class MainActivity {
+- ViewPager2 viewPager
+- BottomNavigationView navbar
+- Fragment currentOrgFragment
+- ProfileFragment profileFragment
+- AlarmManager alarmManager
+- Repository repository
+- ActivityResultLauncher<Intent> signInLauncher
+}
+
+class MainActivity$ScreenSlidePagerAdapter {
+}
+class OrgCheckerFragment {
+- MainActivity parent
+- TextView tvTeamName
+- RecyclerView recyclerView
+- Button back
+- Organization org
++ Team current_team
+- Stack<Team> prevTeams
+}
+
+class OrgEditorFragment {
+- MainActivity parent
+- TextView tvTeamName
+- RecyclerView recyclerView
+- Button addMember
+- AddMemberDialog addMemberDialog
+- AddTeamDialog addTeamDialog
+- Organization org
++ Team current_team
+- List<Team> allTeams
+- Stack<Team> prevTeams
+}
+
+class Organization {
+- String name
+- Team admins
+- List<EventDate> eventDates
+}
+
+class AddMemberDialog {
+~ EditText etName
+~ OrgEditorFragment fragment
+}
+
+class AddOrganizationDialog {
+- MainActivity activity
+- EditText etName
+- Spinner spDay1
+- Button btnPick1
+~ EventDate event1
+}
+
+class CheckOrgRecordDialog {
+- MainActivity parent
+- Spinner spinner
+- Organization orgSelected
+}
+
+class Member {
+- String Name
+- Team underlings
+- boolean came
+}
+
+class OrgFragment {
+- MainActivity parent
+- RelativeLayout layout
+- Button check
+- AddOrganizationDialog addOrganizationDialog
+- CheckOrgRecordDialog checkOrgRecordDialog
+}
+
+class Repository {
+- FirebaseFirestore db
+~ String ORGS_COLLECTION
+~ String VERSION_COLLECTION
+~ String ORG_DOC
+}
+
+interface Repository$GetOrgListener {
+}
+interface Repository$GetVersionsListener {
+}
+class EventDate {
+- int day
+- int hour
+- int minute
+}
+
+class ProfileFragment {
+- TextView tvEmail
+- Button btnSignOut
+- MainActivity parent
+}
+
+class AlarmReceiver {
+}
+
+
+Adapter <|-- OrgCheckerRecyclerViewAdapter
+OrgCheckerRecyclerViewAdapter +.. OrgCheckerRecyclerViewAdapter$ViewHolder
+ViewHolder <|-- OrgCheckerRecyclerViewAdapter$ViewHolder
+Adapter <|-- OrgEditorRecyclerViewAdapter
+OrgEditorRecyclerViewAdapter +.. OrgEditorRecyclerViewAdapter$ViewHolder
+OnCreateContextMenuListener <|.. OrgEditorRecyclerViewAdapter$ViewHolder
+ViewHolder <|-- OrgEditorRecyclerViewAdapter$ViewHolder
+DialogFragment <|-- AddTeamDialog
+AppCompatActivity <|-- MainActivity
+MainActivity +.. MainActivity$ScreenSlidePagerAdapter
+FragmentStateAdapter <|-- MainActivity$ScreenSlidePagerAdapter
+OnClickListener <|.. OrgCheckerFragment
+Fragment <|-- OrgCheckerFragment
+OnClickListener <|.. OrgEditorFragment
+Fragment <|-- OrgEditorFragment
+DialogFragment <|-- AddMemberDialog
+OnClickListener <|.. AddOrganizationDialog
+DialogFragment <|-- AddOrganizationDialog
+DialogFragment <|-- CheckOrgRecordDialog
+OnClickListener <|.. OrgFragment
+Fragment <|-- OrgFragment
+Repository +.. Repository$GetOrgListener
+Repository +.. Repository$GetVersionsListener
+Fragment <|-- ProfileFragment
+BroadcastReceiver <|-- AlarmReceiver
+@enduml
