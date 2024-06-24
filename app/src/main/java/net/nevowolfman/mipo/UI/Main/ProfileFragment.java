@@ -71,8 +71,8 @@ public class ProfileFragment extends Fragment {
                             public void onComplete(@NonNull Task<Void> task) {
                                 try {
                                     OrgFragment orgFragment = (OrgFragment) getParentFragmentManager().findFragmentById(R.id.fragOrg);
-                                    orgFragment.checkOrgMode();
-                                }catch (NullPointerException e) {}
+                                    orgFragment.resetButtons();
+                                }catch (NullPointerException ignored) {}
                                 Toast.makeText(parent, "Signed Out", Toast.LENGTH_SHORT).show();
                                 ((MainActivity)requireActivity()).startSignIn();
                             }

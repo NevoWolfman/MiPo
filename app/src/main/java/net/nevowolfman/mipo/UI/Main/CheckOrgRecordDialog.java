@@ -39,7 +39,11 @@ public class CheckOrgRecordDialog extends DialogFragment {
         parent.getRepository().getVersions(new Repository.GetVersionsListener() {
             @Override
             public void onComplete(List<Organization> org) {
-                ArrayAdapter<Organization> adapter = new ArrayAdapter<>(parent, android.R.layout.simple_spinner_dropdown_item, org.toArray(new Organization[0]));
+                Organization[] orgs = org.toArray(new Organization[0]);
+                if(orgs.length == 0) {
+                    CheckOrgRecordDialog.this.dismiss();
+                }
+                ArrayAdapter<Organization> adapter = new ArrayAdapter<>(parent, android.R.layout.simple_spinner_dropdown_item, orgs);
                 spinner.setAdapter(adapter);
             }
         });
@@ -48,6 +52,22 @@ public class CheckOrgRecordDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 parent.swapFragments(R.id.fragOrg, new OrgCheckerFragment((Organization) spinner.getSelectedItem()));
+            }
+        }).setNeutralButton("Delete This Version", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(parent);
+                builder.setTitle("Are You Sure?")
+                        .setMessage("Deleting this version is permanent")
+                        .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Organization org = (Organization) spinner.getSelectedItem();
+                                parent.getRepository().deleteVersion(org.getName());
+                            }
+                        })
+                        .setNegativeButton(R.string.Cancel, null);
+                builder.create().show();
             }
         }).setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
             @Override

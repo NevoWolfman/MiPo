@@ -1,6 +1,7 @@
 package net.nevowolfman.mipo.Repository;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -97,6 +98,10 @@ public class Repository {
                 }
             }
         });
+    }
+
+    public void deleteVersion(String date) {
+        getVersionCollection().document(date).delete();
     }
 
     public interface GetOrgListener {

@@ -71,6 +71,10 @@ public class OrgFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    public void resetButtons() {
+        layout.removeAllViews();
+    }
+
     public void checkOrgMode() {
         parent.getRepository().getOrg(new Repository.GetOrgListener() {
             @Override

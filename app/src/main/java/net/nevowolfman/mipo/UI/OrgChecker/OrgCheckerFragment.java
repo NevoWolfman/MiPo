@@ -1,5 +1,7 @@
 package net.nevowolfman.mipo.UI.OrgChecker;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -78,7 +80,17 @@ public class OrgCheckerFragment extends Fragment implements View.OnClickListener
                 switchCurrent_team(prevTeams.pop());
             }
             else {
-                parent.swapFragments(R.id.fragOrgEditor, new OrgFragment());
+                AlertDialog.Builder builder = new AlertDialog.Builder(parent);
+                builder.setTitle("Are You Sure?")
+                        .setMessage("Leaving without saving will delete any changes you made")
+                        .setPositiveButton(R.string.Go_Back, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                parent.swapFragments(R.id.fragOrgChecker, new OrgFragment());
+                            }
+                        })
+                        .setNegativeButton(R.string.Cancel, null);
+                builder.create().show();
             }
         }
         else if(view == save) {
